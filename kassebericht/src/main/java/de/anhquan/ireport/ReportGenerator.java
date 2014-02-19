@@ -23,7 +23,7 @@ public class ReportGenerator {
 	private static final String INPUT_LOCALE_LANGUAGE = "en";
 	private static final String INPUT_DATE_FORMAT = "yyyy-MM-dd";
 	private static final String OUTPUT_JASPER_REPORT = "report.pdf";
-	private static final String COMPILED_JASPER_REPORT = "target/classes/report.jasper";
+	private static final String COMPILED_JASPER_REPORT = "report.jasper";
 
 	public static void main(String[] args) throws FileNotFoundException,
 			JRException {
