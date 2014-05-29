@@ -1,0 +1,76 @@
+#parse("/admin/header.vm")	
+ 	
+	<div class="container">    
+			<div class="page-header">
+  				<h4>$className Editor 
+	  				<span class="pull-right"><img src="/admin/icon/loading.gif" name="loading-indicator" style="display:none" /> 
+	  					<span name="loading-msg"></span>
+	  				</span>
+				</h4>
+			</div>
+		
+		   	<form class="form-horizontal" data-async action="$basePath" method="post">
+		   		<input type="hidden" name="action" value="">   
+		   		<input type="hidden" name="name" value="$entity.getName()">   
+				<fieldset>
+							
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="newname">Name</label>  
+				  <div class="col-md-2">
+				  	<input change-listener id="newname" name="newname" type="text" placeholder="placeholder" class="form-control input-md" value="$entity.getName()">
+				  </div>
+				</div>
+				
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="title">Title</label>  
+				  <div class="col-md-4">
+				  	<input change-listener id="title" name="title" type="text" placeholder="placeholder" class="form-control input-md" value="$entity.getTitle()">
+				  </div>
+				</div>
+				
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="description">Description</label>  
+				  <div class="col-md-4">
+				  	<textarea class="form-control" id="description" name="description">$entity.getDescription()</textarea>
+				  </div>
+				</div>
+				
+				<!-- Textarea -->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="content">Page Content</label>
+				  <div class="col-md-8">                     
+				    <textarea class="editor" id="content" name="content">$entity.getContent()</textarea>
+				  </div>
+				</div>
+				
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="template">Template</label>  
+				  <div class="col-md-2">
+				  	<input change-listener id="template" name="template" type="text" placeholder="template default is 'default'" class="form-control input-md" value="$entity.getTemplate()">
+				  </div>
+				</div>
+
+				<!-- Button (Double) -->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="button1id"></label>
+				  <div class="col-md-8">
+				  	<button class="btn btn-default" type="submit" name="btSave" data-toggle="tooltip" data-placement="top" title="" data-original-title="Save"><i class="fa fa-floppy-o"></i> Save</button>
+				  	<button class="btn btn-default" type="submit" name="btCancel" data-toggle="tooltip" data-placement="top" title="" data-original-title="Cancel"><i class="fa fa-undo"></i> Back</button>
+				  	<a class="btn btn-default" name="previewLink" href="/${entity.name}.html" target="_blank"><i class="fa fa-eye"></i> View on frontend</a>  				  	
+				  </div>
+				</div>
+				
+				</fieldset>
+			</form>
+	</div>
+	
+	#parse("/admin/footer.vm")
+	<script src="/admin/js/admin.entity.edit.js"></script>
+	
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="$page.description">
+    
+    $pageMeta
+
+    <title>$storeName - $entity.title</title>
+    
+    <!-- Bootstrap core CSS -->
+    <link href="$theme/css/bootstrap.css" rel="stylesheet">
+    <link href="$theme/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Add custom CSS here -->
+    <link href="$theme/css/style.css" rel="stylesheet">
+    
+    <link href="$theme/lightbox/ekko-lightbox.min.css" rel="stylesheet">
+    
+
+</head>
+
+<body>
+	#parse("$theme/pages/header.vm")
+	
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+				#parse ("$theme/pages/sidebar.vm")
+            </div>
+            <div class="col-md-6">
+            	<h3>$entity.title</h3> 
+            	
+            	#foreach($product in $products)
+            	<ul class="media-list">
+				  <li class="media">
+				    <a class="pull-left" href="http://placehold.it/700x500" data-toggle="lightbox" data-type="image" data-title="A random title" data-footer="A custom footer text">
+				      <img class="media-object" src="http://placehold.it/60x60" alt="..." class="img-responsive">
+				    </a>
+				    <div class="media-body">
+	                        <h4 class="media-heading pull-right">${Formatter.formatCurrency($product.basePrice)} €</h4>
+	                        <h4 class="media-heading"><a href="#">${product.name}. ${product.title}</a></h4>
+	                        <p>${product.shortDescription}</p>
+				    </div>
+				  </li> 
+				</ul>
+            	#end
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+
+   #parse("$theme/pages/footer.vm")
+   
+    <!-- JavaScript -->
+    <script src="$theme/js/jquery-1.10.2.js"></script>
+    <script src="$theme/js/bootstrap.min.js"></script>
+    <script src="$theme/lightbox/ekko-lightbox.js"></script>
+    <script src="$theme/js/script.js"></script>
+</body>
+
+</html>

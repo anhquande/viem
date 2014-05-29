@@ -1,0 +1,1 @@
+mvn -pl viem-web appengine:devserver -o -DskipTests=true

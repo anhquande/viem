@@ -1,0 +1,29 @@
+<footer id="bottom">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 openingtime">
+        <h4 style="color:#CA0000"><i class="fa fa-home"></i> Adresse</h4>									
+        <p><strong>$storeName</strong></p>
+        <p>$storeAddressLine1</p>
+        <p>$storeAddressLine2</p>         
+      </div> 
+      <div class="col-md-3 openingtime">
+          <h4 style="color:#CA0000"><i class="fa fa-envelope"></i> Kontakt</h4>
+          <p><i class="fa fa-phone"></i> $storeTelephone</p>
+          <p><i class="fa fa-print"></i> $storeFax</p>
+          <p><i class="fa fa-anchor"></i> $storeWebsite</p>
+          
+      </div>
+      <div class="col-md-3 openingtime">
+          <h4 style="color:#CA0000"><i class="fa fa-clock-o"></i> Öffnungszeiten</h4>
+          $storeOpeningTime
+      </div>
+    </div>
+    <hr>
+    <div class="container">
+      <p>$footer1</p>
+      <p>$footer2</p>
+    </div>
+  </div>
+
+</footer>

@@ -1,0 +1,75 @@
+
+	#parse("/admin/header.vm")	
+
+	<div class="container">    
+			<div class="page-header">
+				<form toolbar-async action="${basePath}" method="post" class="pull-right">
+					<input type="hidden" name="action" value="">   
+						<span class="tooltip-container">
+							<a href="${basePath}?action=create" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="" data-original-title="New"><i class="fa fa-plus"></i> </a>
+							<button class="btn btn-default" type="submit" name="btSaveAll" data-toggle="tooltip" data-placement="top" title="" data-original-title="Save all to database"><i class="fa fa-database"></i> </button> 
+							<button class="btn btn-default" type="submit" name="btLoadAll" data-toggle="tooltip" data-placement="top" title="" data-original-title="Load all from database"><i class="fa fa-reply"></i> </button>
+							<button class="btn btn-default" type="submit" name="btClearAll" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete all in cache and database"><i class="fa fa-trash-o"></i> </button>
+							<a href="${basePath}?action=export2json" class="btn btn-default" name="btExport" data-toggle="tooltip" data-placement="top" title="" data-original-title="Export database to json (also save cache to database)"><i class="fa fa-save"></i> </a>
+							<button class="btn btn-default" type="submit" name="btImport" data-toggle="tooltip" data-placement="top" title="" data-original-title="Import from JSON file to database. Cache does not change."><i class="fa fa-upload"></i> </button>
+							<img src="/admin/icon/loading.gif" name="loading-indicator" style="display:none" /><span name="loading-msg"></span>
+							
+						</span>
+				 </form>		
+				 <h4>$className Manager <small></small></h4>
+			</div>
+			
+			<div id="uploadForm">
+				<form fileupload-async action="${basePath}" method="post" enctype="multipart/form-data">
+			        <input type="submit" value="Start Import">
+			        <input type="file" name="importedFile">			        
+			    </form>
+			    
+			    <div class="progress">
+			        <div class="bar"></div >
+			        <div class="percent">0%</div >
+			    </div>
+			    
+			    <div id="status"></div>
+			</div>
+		   	<div class="table-responsive">
+			    <table class="table">
+			        <thead>
+			            <tr>
+			                <th class="col-sm-1">#</th>
+			                <th class="col-sm-3">Path</th>
+			                <th class="col-sm-6">Title </th>
+			                <th class="col-sm-2">
+			                </th>
+			            </tr>
+			        </thead>
+			        <tbody>
+			        #foreach($entity in $entities)     
+			          <tr>
+			                <td>$velocityCount</td>
+			                <td><a href="${basePath}?action=view&name=$entity.getName()">/$entity.getName()</a></td>
+			                <td>$entity.getTitle()</td>
+			                <td>
+			                	 <form data-async action="${basePath}" method="post">
+									<input type="hidden" name="name" value="$entity.getName()">
+									<input type="hidden" name="action" value="">   
+									<img src="/admin/icon/loading.gif" name="loading-indicator" style="display:none" /><span name="loading-msg"></span>
+									<span class="tooltip-container">									
+										<a href="/${entity.name}.html" target="_blank" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="" data-original-title="View on frontend"><i class="fa fa-play"></i></a>									
+										<button class="btn btn-default" type="submit" name="btDelete" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete from cache and from database"><i class="fa fa-trash-o"></i></button>
+									</span>
+									
+								 </form>
+							</td>
+			          </tr>
+			        #end
+			        </tbody>
+			    </table>
+			</div> <! -- table-responsive -->
+	</div>
+	#parse("/admin/footer.vm")
+	<script src="/admin/js/admin.entity.list.js"></script>
+	
+</body>
+
+</html>
