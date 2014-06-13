@@ -1,0 +1,77 @@
+
+	#parse("/admin/header.vm")	
+
+	<div class="container">    
+			<div class="page-header">
+				<form toolbar-async action="${basePath}" method="post" class="pull-right">
+					<input type="hidden" name="action" value="">   
+						<span class="tooltip-container">
+							<a href="${basePath}?action=create" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="" data-original-title="New"><i class="fa fa-plus"></i> </a>
+							<button class="btn btn-default" type="submit" name="btClearAll" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete all in cache and database"><i class="fa fa-trash-o"></i> </button>
+							<a href="${basePath}?action=export2json" class="btn btn-default" name="btExport" data-toggle="tooltip" data-placement="top" title="" data-original-title="Export database to json (also save cache to database)"><i class="fa fa-save"></i> </a>
+							<button class="btn btn-default" type="submit" name="btImport" data-toggle="tooltip" data-placement="top" title="" data-original-title="Import from JSON file to database. Cache does not change."><i class="fa fa-upload"></i> </button>
+							<span name="loading-indicator" style="display:none"></span><span name="loading-msg"></span>
+						</span>
+				 </form>		
+				 <h4>$className Manager <small></small></h4>
+			</div>
+			
+			<div id="uploadForm">
+				<form fileupload-async action="${basePath}" method="post" enctype="multipart/form-data">
+			        <input type="submit" value="Start Import">
+			        <input type="file" name="importedFile">			        
+			    </form>
+			    
+			    <div class="progress">
+			        <div class="bar"></div >
+			        <div class="percent">0%</div >
+			    </div>
+			    
+			    <div id="status"></div>
+			</div>
+			
+		   	<ul class="list-group" id="sortable">
+		        #foreach($entity in $entities) 
+		          #parse("/admin/Category.new.vm")
+		        #end
+			</ul>
+
+	</div>
+	#parse("/admin/footer.vm")
+	
+	<script>
+  		$(function() {
+
+    		$( "#sortable" ).sortable({
+  				update: function( event, ui ) {
+  					var $frm = $('form[toolbar-async]');
+  					$('span[name=toolbar-loading-indicator]',$frm).show();
+  					$('span[name=toolbar-loading-msg]',$frm).html("Sorting ...").fadeIn(10);
+  					
+					var result = $(this).sortable('toArray').toString();
+					console.log(result); 
+					var obj = {};
+    				obj['action']='sort';
+    				obj['sortedIds'] = result;
+					$.ajax({
+			        	dataType: "json",
+			            type: 'POST',
+			            url: '$basePath',
+			            data: obj,
+			            success: function(jsonObj, status) {
+			            	$('span[name=toolbar-loading-indicator]',$frm).hide();
+			            	$('span[name=toolbar-loading-msg]',$frm).html("<i class='fa fa-check'></i> Sorting finished!").addClass("alert-success").fadeOut(2000);
+			            }
+			        });
+  				}
+			});
+    		
+    		$( "#sortable" ).disableSelection();
+  		});
+  	</script>
+	
+	<script src="/admin/js/admin.entity.list.js"></script>
+	
+</body>
+
+</html>

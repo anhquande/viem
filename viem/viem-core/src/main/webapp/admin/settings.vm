@@ -1,0 +1,87 @@
+﻿    #parse("/admin/header.vm")
+
+	<div class="container">    
+		
+			<div class="page-header" >
+				<form toolbar-async action="/admin/setting" method="post" class="pull-right">
+					<input type="hidden" name="action" value="">   
+						<span class="tooltip-container">
+							<img src="/admin/icon/loading.gif" name="toolbar-loading-indicator" style="display:none" /><span name="toolbar-loading-msg"></span>						
+							<button class="btn btn-default" type="submit" name="btSaveAll" data-toggle="tooltip" data-placement="top" title="" data-original-title="Save cache to database"><i class="fa fa-database"></i> </button> 
+							<button class="btn btn-default" type="submit" name="btLoadAll" data-toggle="tooltip" data-placement="top" title="" data-original-title="Restore cache from database"><i class="fa fa-reply"></i> </button>
+							<button class="btn btn-default" type="submit" name="btClearAll" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete all settings from cache and database"><i class="fa fa-trash-o"></i> </button>
+							<a href="/admin/setting?action=exportall" class="btn btn-default" name="btExport" data-toggle="tooltip" data-placement="top" title="" data-original-title="Export settings to json (also save settings from cache to database)"><i class="fa fa-save"></i> </a>
+							<button class="btn btn-default" type="submit" name="btImport" data-toggle="tooltip" data-placement="top" title="" data-original-title="Import settings from JSON file to database. Cache does not change."><i class="fa fa-upload"></i> </button>
+							
+						</span>
+				 </form>	
+				 <h4>Settings</h4>
+			</div>
+			
+			<div id="uploadForm" style="display:none">
+				<form fileupload-async action="/admin/setting" method="post" enctype="multipart/form-data">
+			        <input type="submit" value="Start Import">
+			        <input type="file" name="importedFile">			        
+			    </form>
+			    
+			    <div class="progress">
+			        <div class="bar"></div >
+			        <div class="percent">0%</div >
+			    </div>
+			    
+			    <div id="status"></div>
+			</div>
+			
+		<ul class="nav nav-tabs">
+		  <li class="active"><a href="#app" data-toggle="tab">General</a></li>
+		  <li><a href="#store" data-toggle="tab">Store</a></li>
+		   <li><a href="#translation" data-toggle="tab">Translation</a></li>
+		</ul>
+		 <div id='content' class="tab-content">
+		    
+	   	#foreach($setting in $settings)
+	   	
+	   		#if ($velocityCount == 1)
+	   			<div class="tab-pane active" id="app">
+	   		#elseif ($velocityCount == 12)
+	   			<div class="tab-pane" id="store">
+			#elseif ($velocityCount == 22)	   	
+				<div class="tab-pane" id="translation">			
+	   		#end
+			   	<div class="row" style="margin-top:20px">	   	
+				   	<form class="form-horizontal" data-async action="/admin/setting" method="post">
+						<input type="hidden" name="key" value="$setting.getName()">
+						<input type="hidden" name="action" value="">
+					  <div class="col-lg-12">
+					    <div class="row">
+					    	<div class="input-group">
+					        <label class="form-control alert-success ">$velocityCount. $setting.getTitle() <small>(key=$setting.getName())</small> <span class='pull-right'> <img src="$theme/icon/loading.gif" name="loading-indicator" style="display:none" /><span name="loading-msg"></span></span></label>
+					  	     <span class="input-group-btn tooltip-container">
+					        	<button class="btn btn-default" type="submit" name="btReset" data-toggle="tooltip" data-placement="top" title="" data-original-title="Restore to default value"><i class='fa fa-refresh'></i></button>
+					        	<button class="btn btn-default" type="submit" name="btSave" data-toggle="tooltip" data-placement="top" title="" data-original-title="Save to cache"><i class='fa fa-save'></i></button> 
+					      	</span>
+					  	 </div><!-- /input-group -->
+					  	 
+					      <textarea name="value" class="form-control" rows="2" cols="80" >$setting.getValue()</textarea>
+					    </div><!-- /input-group -->
+					  </div><!-- /.col-lg-12 -->
+		
+				   	</form>
+				</div>
+			#if ($velocityCount == 11)
+	   			</div>
+	   		#elseif ($velocityCount == 21)
+	   			</div>
+			#elseif ($velocityCount == 45)	   	
+				</div>		
+	   		#end
+				
+	   	#end
+	   	</div>    
+	</div>
+		#parse("/admin/footer.vm")
+ 	
+    <script src="/admin/js/admin.setting.js"></script>
+</body>
+
+</html>

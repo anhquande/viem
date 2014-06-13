@@ -1,0 +1,17 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description" content="$page.description">
+<title>$storeName - $page.title</title>
+$pageMeta    
+   
+<!-- Bootstrap core CSS -->
+<link href="/base/css/bootstrap.css" rel="stylesheet">
+<link href="/base/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+<link href="/base/plugins/jquery-ui/jquery-ui-1.10.4.min.css" rel="stylesheet">
+<link href="/base/plugins/radios-to-slider/radios-to-slider.min.css" rel="stylesheet">
+<link href="/base/plugins/lightbox/ekko-lightbox.min.css" rel="stylesheet">
+<link href="/base/plugins/jquery-ui/jquery-ui-1.10.4.min.css" rel="stylesheet">
+<!-- Add custom CSS here -->
+<link href="$theme/css/style.css" rel="stylesheet">

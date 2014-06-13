@@ -6,17 +6,13 @@
   <packaging>pom</packaging>
   <modules>
   	<module>viem-core</module>
-  	<module>viem-web</module>
-  	<module>viem-frontend</module>
-  	<module>viem-admin</module>
-  	<module>viem-gastro</module>
   </modules>
   
   	<properties>
 	<!-- Some AppID:  lieferungsstatus daiduongservice bestellungcheck bienhoadev-->
 		<appengine.app.id>daiduongservice</appengine.app.id>
 		<appengine.app.version>1</appengine.app.version>
-		<appengine.target.version>1.9.2</appengine.target.version>
+		<appengine.target.version>1.9.5</appengine.target.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 </project>

@@ -1,0 +1,52 @@
+#parse("/admin/header.vm")	
+ 	
+	<div class="container">    
+			
+		   	<form class="form-horizontal" data-async action="$basePath" method="post">
+			
+				<div class="page-header">
+					<h4>$className Editor 
+						<span class="pull-right"><span class="loading-indicator" name="loading-indicator" style="display:none"> </span> 
+							<span name="loading-msg"></span>
+						</span>
+					</h4>
+				</div>
+			
+		   		<input type="hidden" name="action" value="">   
+		   		<input type="hidden" name="id" value="$entity.getId()">   
+				<fieldset>
+							
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="name">Name</label>  
+				  <div class="col-md-4">
+				  	<input change-listener id="name" name="name" type="text" placeholder="placeholder" class="form-control input-md" value="$entity.getName()">
+				  </div>
+				</div>
+				
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="title">Title</label>  
+				  <div class="col-md-4">
+				  	<input change-listener id="title" name="title" type="text" placeholder="placeholder" class="form-control input-md" value="$entity.getTitle()">
+				  </div>
+				</div>
+				
+				<!-- Button (Double) -->
+				<div class="form-group">
+				  <label class="col-md-4 control-label"></label>
+				  <div class="col-md-8">
+				  	<button class="btn btn-default" type="submit" name="btSave" data-toggle="tooltip" data-placement="top" title="" data-original-title="Save"><i class="fa fa-floppy-o"></i> Save</button>
+				  	<button class="btn btn-default" type="submit" name="btCancel" data-toggle="tooltip" data-placement="top" title="" data-original-title="Cancel"><i class="fa fa-undo"></i> Back</button>				  	
+				  </div>
+				</div>
+				</fieldset>
+			</form>
+	</div>
+	
+	#parse("/admin/footer.vm")
+		<script src="/admin/js/admin.entity.edit.js"></script>
+	
+</body>
+
+</html>

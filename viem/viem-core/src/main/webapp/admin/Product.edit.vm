@@ -1,0 +1,482 @@
+#parse("/admin/header.vm")	
+ 	
+	<div class="container">    
+		   	<form class="form-horizontal" data-async action="$basePath" method="post">
+				<div class="page-header">
+					<h4>$className Editor 
+						<span class="pull-right"><span name="loading-indicator" class="loading-indicator" style="display:none"></span> 
+							<span name="loading-msg"></span>
+						</span>
+					</h4>
+				</div>
+				
+		   		<input type="hidden" name="action" value="">   
+		   		<input type="hidden" name="id" value="$entity.getId()">   
+				<fieldset>
+							
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="name">SKU</label>  
+				  <div class="col-md-4">
+				  	<input change-listener id="name" name="name" type="text" placeholder="placeholder" class="form-control input-md" value="$entity.getName()">
+				  </div>
+				</div>
+
+				
+				<div class="form-group">
+				   <label class="col-md-4 control-label" for="vegetarian">Vegetarian</label>  
+				  <div class="col-md-1">
+				  	<input change-listener id="vegetarian" name="vegetarian" type="checkbox" placeholder="placeholder" class="form-control input-md" #if ($entity.isVegetarian()) checked #end">
+				  </div>
+				
+				  <label class="col-md-1 control-label" for="defaultSpicyLevel"></label>  
+				  <div class="col-md-2">
+				  <select class="form-control" id="defaultSpicyLevel" name="defaultSpicyLevel" change-listener>
+				  		<option #if ($entity.getDefaultSpicyLevel()==0) selected  #end value="0" >Nicht scharf</option>
+						<option #if ($entity.getDefaultSpicyLevel()==1) selected  #end value="1" >Leicht scharf</option>
+						<option #if ($entity.getDefaultSpicyLevel()==2) selected  #end value="2" >Scharf</option>
+						<option #if ($entity.getDefaultSpicyLevel()==3) selected  #end value="3" >Sehr scharf</option>
+						<option #if ($entity.getDefaultSpicyLevel()==4) selected  #end value="4" >Extreme scharf</option>
+					</select>
+				  </div>
+				</div>
+				
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="title">Title</label>  
+				  <div class="col-md-4">
+				  	<input change-listener id="title" name="title" type="text" placeholder="placeholder" class="form-control input-md" value="$entity.getTitle()">
+				  </div>
+				</div>
+				
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="fullDescription">Full Description</label>  
+				  <div class="col-md-4">
+				  	<textarea class="form-control" id="fullDescription" name="fullDescription">$entity.getFullDescription()</textarea>
+				  </div>
+				</div>
+				
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="shortDescription">Short Description</label>  
+				  <div class="col-md-4">
+				  	<textarea class="form-control" id="shortDescription" name="shortDescription">$entity.getShortDescription()</textarea>
+				  </div>
+				</div>
+				
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="categories">Categories</label>  
+				  <div class="col-md-4">
+				  	<select class="multiselect" multiple="multiple" name="categories">
+				  	#foreach($cat in $categories)
+					  <option value="$cat.id" $cat.selected > $cat.title</option>
+					#end
+					</select>
+				  </div>
+				</div>
+				
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="basePrice">Base Price</label>  
+				  <div class="col-md-1">
+				  	<input change-listener id="basePrice" name="basePrice" type="text" placeholder="" class="form-control input-md" value="$entity.getBasePrice()">
+				  </div>
+				
+				  <label class="col-md-2 control-label" for="comparePrice">Compare Price</label>  
+				  <div class="col-md-1">
+				  	<input change-listener id="comparePrice" name="comparePrice" type="text" placeholder="" class="form-control input-md" value="$entity.getComparePrice()">
+				  </div>
+				</div>
+				
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="quantity">Inventory Quantity</label>  
+				  <div class="col-md-4">
+				  	<input change-listener id="quantity" name="quantity" type="text" placeholder="" class="form-control input-md" value="$entity.getQuantity()">
+				  </div>
+				</div>
+				
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="thumbnail">Thumbnail
+				  </label>  
+				  <div class="col-md-4">
+				  	<input change-listener id="thumbnail" name="thumbnail" type="text" placeholder="" class="form-control input-md" value="$entity.getThumbnail()">
+				  </div>
+				  <div class="col-md-4">
+				  	<img src="$entity.getThumbnail()" width="35px"/>
+				  </div>
+				</div>
+
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="quantity">Image 1
+				  </label>  
+				  <div class="col-md-4">
+				  	<input change-listener id="image1" name="image1" type="text" placeholder="" class="form-control input-md" value="$entity.getImage1()">
+				  </div>
+				  	<img src="$entity.getImage1()" class="media-object" width="35px" height="35px"/>
+				</div>
+
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="quantity">Image 2
+				  </label>  
+				  <div class="col-md-4">
+				  	<input change-listener id="image2" name="image2" type="text" placeholder="" class="form-control input-md" value="$entity.getImage2()">
+				  </div>
+				  <div class="col-md-4">
+				  	<img src="$entity.getImage2()" width="35px"/>
+				  </div>
+				</div>
+
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="quantity">Image 3
+				  </label>  
+				  <div class="col-md-4">
+				  	<input change-listener id="image3" name="image3" type="text" placeholder="" class="form-control input-md" value="$entity.getImage3()">
+				  </div>
+				  <div class="col-md-4">
+				  	<img src="$entity.getImage3()" width="35px"/>
+				  </div>				  
+				</div>
+				
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="sortValue">Sort Value</label>  
+				  <div class="col-md-4">
+				  	<input change-listener id="sortValue" name="sortValue" type="text" placeholder="" class="form-control input-md" value="$entity.getSortValue()">
+				  </div>
+				</div>
+				
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="template">Template</label>  
+				  <div class="col-md-2">
+				  	<input change-listener id="template" name="template" type="text" placeholder="template default is 'default'" class="form-control input-md" value="$entity.getTemplate()">
+				  </div>
+				  
+				  				
+				  <label class="col-md-1 control-label" for="visible">Visible</label>  
+				  <div class="col-md-1">
+				  	<input change-listener id="visible" name="visible" type="checkbox" placeholder="placeholder" class="form-control input-md" #if ($entity.isVisible()) checked #end">
+				  </div>
+
+				</div>
+				
+				<!-- Button (Double) -->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="button1id"></label>
+				  <div class="col-md-8">
+				  	<button class="btn btn-default" type="submit" name="btSave" data-toggle="tooltip" data-placement="top" title="Click to save" data-original-title="Save"><i class="fa fa-floppy-o"></i> Save</button>
+				  	<button class="btn btn-default" type="submit" name="btCancel" data-toggle="tooltip" data-placement="top" title="" data-original-title="Cancel"><i class="fa fa-undo"></i> Back</button>
+				 	<a class="btn btn-default" name="previewLink" href="/product/${entity.name}" target="_blank"><i class="fa fa-eye"></i> View on frontend</a>  
+				  	
+				  </div>
+				</div>
+				</fieldset>
+			</form>
+	</div>
+	
+	<div class="container" >
+			
+			<div class="page-header" >
+				 <form product-option action="${basePath}" method="post" class="pull-right">
+					<input type="hidden" name="id" value="$entity.id">
+					<input type="hidden" name="action" value="">  
+					<span name="loading-indicator" style="display:none" class="loading-indicator"></span><span name="loading-msg"></span>
+					
+				  	<select class="form-inline" id="type" name="type" change-listener>
+				  	#foreach($opt in $defaultOptions)
+				  		<option value="$opt.id" >$opt.title</option>				  	
+				  	#end
+					</select>
+
+					<span class="tooltip-container form-inline">									
+						<button class="btn btn-custom" type="submit" name="btAddOption" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add new option"><i class="fa fa-plus"></i></button>
+					</span>
+				 </form>	
+			
+  				<h4>Product Options 
+  				</h4>
+			</div>
+			
+			<ul class="list-group" id="productOptions" name="productOptions">
+		      #foreach($option in $options) 
+				#parse("/admin/Option.new.vm")
+			  #end
+			</ul>
+	</div> <!-- /container -->
+	
+	#parse("/admin/footer.vm")
+		<script src="/admin/js/admin.entity.edit.js"></script>
+	
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('.multiselect').bootstrapMultiselect(
+		{
+	   		nonSelectedText: 'You can select multiple categories',       		       		
+	   		enableFiltering: true,
+	   		filterBehavior: 'both',
+	   		selectAllText: 'Select all',
+	   		selectAllValue: 'multiselect-all',
+	   		includeSelectAllOption: true,
+	   		includeSelectAllIfMoreThan: 3,
+	   		includeSelectAllDivider: true,
+	   		numberDisplayed: 20,
+	   		checkboxName: 'categories'
+	   		
+	 	}
+	);
+     
+	$( "#productOptions" ).sortable({
+		update: function( event, ui ) {
+			var $frm = $('form[product-option]');
+			$('img[name=loading-indicator]',$frm).show();
+			$('span[name=loading-msg]',$frm).html("Sorting ...").fadeIn(10);
+			
+			var result = $(this).sortable('toArray').toString();
+			console.log(result); 
+			var obj = {};
+			obj['action']='sortOption';
+			obj['sortedOptions'] = result;
+			$.ajax({
+	        	dataType: "json",
+	            type: 'POST',
+	            url: '$basePath',
+	            data: obj,
+	            success: function(jsonObj, status) {
+	            	$('span[name=loading-indicator]',$frm).hide();
+	            	$('span[name=loading-msg]',$frm).html("<i class='fa fa-check'></i> Sorting finished!").addClass("alert-success").fadeOut(2000);
+	            }
+	        });
+		}
+	});
+	
+	$( "#productOptions" ).disableSelection();
+	
+	$( "#optionItems" ).sortable({
+		update: function( event, ui ) {
+			var $frm = $('form[product-option]');
+			$('span[name=loading-indicator]',$frm).show();
+			$('span[name=loading-msg]',$frm).html("Sorting ...").fadeIn(10);
+			
+			var result = $(this).sortable('toArray').toString();
+			console.log(result); 
+			var obj = {};
+			obj['action']='sortOptionItem';
+			obj['sortedOptionItems'] = result;
+			$.ajax({
+	        	dataType: "json",
+	            type: 'POST',
+	            url: '$basePath',
+	            data: obj,
+	            success: function(jsonObj, status) {
+	            	$('span[name=loading-indicator]',$frm).hide();
+	            	$('span[name=loading-msg]',$frm).html("<i class='fa fa-check'></i> Sorting finished!").addClass("alert-success").fadeOut(2000);
+	            }
+	        });
+		}
+	});
+	
+	$( "#optionItems" ).disableSelection();
+
+	
+    $(document).on('submit', 'form[product-option]', function(event) {
+		var $form = $(this);
+		$('span[name=loading-indicator]',$form).show();
+        $('span[name=loading-msg]',$form).html("");
+
+        var $bt = $( ":input[type=submit]:focus" ,$form);
+
+		if ($bt.attr('name') == 'btAddOption'){
+			$('input[name=action]',$form).val('addOption');
+			$.ajax({
+        	dataType: "json",
+            type: $form.attr('method'),
+            url: $form.attr('action'),
+            data: $form.serialize(),
+            success: function(jsonObj, status) {
+            	$('span[name=loading-indicator]',$form).hide();
+            	$('span[name=loading-msg]',$form).html("").show();
+            	
+            	if (jsonObj.errno==0){
+            		console.log('add success');
+            		$( '#productOptions' ).append(jsonObj.newItem);
+            	}
+            	else{
+            		$('span[name=loading-msg]',$form).html("<i class='fa fa-warning'></i> "+jsonObj.errmsg).fadeOut(2000);
+            	}
+            }
+            });
+		}
+		else if ($bt.attr('name') == 'btDuplicateOption'){
+			$('input[name=action]',$form).val('duplicateOption');
+			$.ajax({
+        	dataType: "json",
+            type: $form.attr('method'),
+            url: $form.attr('action'),
+            data: $form.serialize(),
+            success: function(jsonObj, status) {
+            	$('span[name=loading-indicator]',$form).hide();
+            	$('span[name=loading-msg]',$form).html("").show();
+            	
+            	if (jsonObj.errno==0){
+            		console.log('add success');
+            		$( '#productOptions' ).append(jsonObj.newItem);
+            	}
+            	else{
+            		$('span[name=loading-msg]',$form).html("<i class='fa fa-warning'></i> "+jsonObj.errmsg).fadeOut(2000);
+            	}
+            }
+            });
+		}	
+		else if ($bt.attr('name') == 'btDeleteOption'){
+			$('input[name=action]',$form).val('deleteOption');
+			$.ajax({
+        	dataType: "json",
+            type: $form.attr('method'),
+            url: $form.attr('action'),
+            data: $form.serialize(),
+            success: function(jsonObj, status) {
+            	$('span[name=loading-indicator]',$form).hide();
+            	$('span[name=loading-msg]',$form).html("").show();
+            	
+            	if (jsonObj.errno==0){
+            		$( 'li[id="'+jsonObj.optionId+'"]' ).remove();
+            	}
+            	else{
+            		$('span[name=loading-msg]',$form).html("<i class='fa fa-warning'></i> "+jsonObj.errmsg).fadeOut(2000);
+            	}
+            }
+            });
+		}	
+		else if ($bt.attr('name') == 'btUpdateOption') {
+			$('input[name=action]',$form).val('updateOption');
+			console.log("btUpdateOption ...") ;
+			$.ajax({
+        	dataType: "json",
+            type: $form.attr('method'),
+            url: $form.attr('action'),
+            data: $form.serialize(),
+            success: function(jsonObj, status) {
+            	$('span[name=loading-indicator]',$form).hide();
+            	$('span[name=loading-msg]',$form).html("").show();
+            
+            	if (jsonObj.errno==0){
+            		console.log("update success") ;
+            		$('span[name=loading-msg]',$form).html("<i class='fa fa-check'></i> "+jsonObj.errmsg).fadeOut(2000);
+            	}
+            	else{
+            		$('span[name=loading-msg]',$form).html("<i class='fa fa-warning'></i> "+jsonObj.errmsg).fadeOut(2000);
+            	}
+            }
+            });
+		}
+		else if ($bt.attr('name') == 'btAddOptionItem'){
+			$('input[name=action]',$form).val('addOptionItem');
+			$.ajax({
+        	dataType: "json",
+            type: $form.attr('method'),
+            url: $form.attr('action'),
+            data: $form.serialize(),
+            success: function(jsonObj, status) {
+            	$('span[name=loading-indicator]',$form).hide();
+            	$('span[name=loading-msg]',$form).html("").show();
+            	
+            	if (jsonObj.errno==0){
+            		console.log('add success');
+            		$( '#optionItems' ).append(jsonObj.newItem);
+            	}
+            	else{
+            		$('span[name=loading-msg]',$form).html("<i class='fa fa-warning'></i> "+jsonObj.errmsg).fadeOut(2000);
+            	}
+            }
+            });
+		}	
+		event.preventDefault();
+    });
+	
+	$(document).on('submit', 'form[option-item]', function(event) {
+		var $form = $(this);
+		$('span[name=loading-indicator]',$form).show();
+        $('span[name=loading-msg]',$form).html("");
+
+        var $bt = $( ":input[type=submit]:focus" ,$form);	
+		if ($bt.attr('name') == 'btUpdateOptionItem'){
+			$('input[name=action]',$form).val('updateOptionItem');
+			console.log("updateOptionItem....") ;
+			$.ajax({
+        	dataType: "json",
+            type: $form.attr('method'),
+            url: $form.attr('action'),
+            data: $form.serialize(),
+            success: function(jsonObj, status) {
+            	$('span[name=loading-indicator]',$form).hide();
+            	$('span[name=loading-msg]',$form).html("").show();
+            
+            	if (jsonObj.errno==0){
+            		console.log("update success") ;
+            		$( '#optionItems' ).append(jsonObj.newItem);
+            	}
+            	else{
+            		$('span[name=loading-msg]',$form).html("<i class='fa fa-warning'></i> "+jsonObj.errmsg).fadeOut(2000);
+            	}
+            }
+            });
+        }	
+		else if ($bt.attr('name') == 'btDuplicateOptionItem'){
+			$('input[name=action]',$form).val('duplicateOptionItem');
+			console.log("duplicateOptionItem....") ;
+			$.ajax({
+        	dataType: "json",
+            type: $form.attr('method'),
+            url: $form.attr('action'),
+            data: $form.serialize(),
+            success: function(jsonObj, status) {
+            	$('span[name=loading-indicator]',$form).hide();
+            	$('span[name=loading-msg]',$form).html("").show();
+            
+            	if (jsonObj.errno==0){
+            		console.log("update success") ;
+            		$( '#optionItems' ).append(jsonObj.newItem);
+            	}
+            	else{
+            		$('span[name=loading-msg]',$form).html("<i class='fa fa-warning'></i> "+jsonObj.errmsg).fadeOut(2000);
+            	}
+            }
+            });
+        }
+		else if ($bt.attr('name') == 'btDeleteOptionItem'){
+			$('input[name=action]',$form).val('deleteOptionItem');
+			$.ajax({
+        	dataType: "json",
+            type: $form.attr('method'),
+            url: $form.attr('action'),
+            data: $form.serialize(),
+            success: function(jsonObj, status) {
+            	$('span[name=loading-indicator]',$form).hide();
+            	$('span[name=loading-msg]',$form).html("").show();
+            	
+            	if (jsonObj.errno==0){
+            		$( 'li[option-item][id="'+jsonObj.optionItemId+'"]' ).remove();
+            	}
+            	else{
+            		$('span[name=loading-msg]',$form).html("<i class='fa fa-warning'></i> "+jsonObj.errmsg).fadeOut(2000);
+            	}
+            }
+            });
+		}	
+    	
+			
+        event.preventDefault();
+    });
+  });
+</script>
+	
+</body>
+
+</html>

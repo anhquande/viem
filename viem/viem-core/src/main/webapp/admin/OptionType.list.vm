@@ -1,0 +1,61 @@
+
+	#parse("/admin/header.vm")	
+
+	<div class="container">    
+			<div class="page-header">
+				<form toolbar-async action="${basePath}" method="post" class="pull-right">
+					<input type="hidden" name="action" value="">   
+						<span class="tooltip-container">
+							<span name="toolbar-loading-indicator" class="loading-indicator" style="display:none"></span><span name="toolbar-loading-msg"></span>
+						
+							<a href="${basePath}?action=create" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="" data-original-title="New"><i class="fa fa-plus"></i> </a>
+							<button class="btn btn-default" type="submit" name="btClearAll" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete all in cache and database"><i class="fa fa-trash-o"></i> </button>
+							<a href="${basePath}?action=export2json" class="btn btn-default" name="btExport" data-toggle="tooltip" data-placement="top" title="" data-original-title="Export database to json"><i class="fa fa-save"></i> </a>
+							<button class="btn btn-default" type="submit" name="btImport" data-toggle="tooltip" data-placement="top" title="" data-original-title="Import from JSON file to database."><i class="fa fa-upload"></i> </button>
+						</span>
+				 </form>		
+				 <h4>$className Manager <small>
+				 </small></h4>
+			</div>
+			
+			<div id="uploadForm" class="well well-sm" >
+				<form fileupload-async action="${basePath}" method="post" enctype="multipart/form-data">
+					<div class="input-append">
+						<input id="importedFileName" class="input-large" type="text">
+						<a class="btn" onclick="$('input[name=importedFile]').click();">Browse</a>
+						<input class="btn" type="submit" value="Start Import">
+					</div>
+					
+			        <input style="display:none" type="file" name="importedFile">			        
+			    </form>
+			    
+			    <div class="progress">
+			        <div class="bar"></div >
+			        <div class="percent">0%</div >
+			    </div>
+			    
+			    <div id="status"></div>
+			</div>
+		   	<ul class="list-group" id="sortable">
+		        #foreach($entity in $entities) 
+		          <li class="list-group-item" id="$entity.id">
+			           <form data-async action="${basePath}" method="post">
+							<input type="hidden" name="id" value="$entity.id">
+							<input type="hidden" name="action" value="">   
+							<span name="loading-indicator" style="display:none"></span><span name="loading-msg"></span>
+							<span class="tooltip-container">									
+								<button class="btn btn-default" type="submit" name="btDelete" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="fa fa-trash-o"></i></button>
+							</span>
+							<a href="${basePath}?action=view&id=$entity.id">$entity.getTitle()</a>
+						 </form>
+				  </li>
+		        #end
+			</ul>
+	</div>
+	#parse("/admin/footer.vm")
+	
+	<script src="/admin/js/admin.entity.list.js"></script>
+	
+</body>
+
+</html>

@@ -1,1 +1,0 @@
-mvn compile install -pl viem-frontend -DskipTests=true

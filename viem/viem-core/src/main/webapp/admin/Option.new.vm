@@ -1,0 +1,81 @@
+<li class="list-group-item "  id="${option.id}">
+   	<form class="form-horizontal" product-option action="${basePath}" method="post">
+   		<input type="hidden" name="id" value="${entity.id}">
+		<input type="hidden" name="optionId" value="${option.id}">
+		<input type="hidden" name="action" value="">
+   	
+   		<fieldset>  	
+   			<div class="form-group">
+       			<div class="col-md-4">
+       			    <h4 class="list-group-item-heading"><i display-toggle="max" class="fa fa-minus-square"></i> <span class="strong">Option #$option.sortValue</span></h4>
+       			</div>
+   				<span class="tooltip-container col-md-4 ">	
+					<button class="btn btn-default" type="submit" name="btAddOptionItem" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add new option item"><i class="fa fa-plus"></i></button>													
+					<button class="btn btn-default" type="submit" name="btDuplicateOption" data-toggle="tooltip" data-placement="top" title="" data-original-title="Duplicate option"><i class="fa fa-copy"></i></button>
+					<button class="btn btn-default" type="submit" name="btDeleteOption" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete option"><i class="fa fa-trash-o"></i></button>
+					<button class="btn btn-default" type="submit" name="btUpdateOption" data-toggle="tooltip" data-placement="top" title="" data-original-title="Save option"><i class="fa fa-save"></i></button>
+					<button class="btn btn-default" type="submit" name="btSaveOptionAsTemplate" data-toggle="tooltip" data-placement="top" title="" data-original-title="Save as template"><i class="fa fa-book"></i></button>
+       				<span name="loading-indicator" class="loading-indicator" style="display:none"></span><span name="loading-msg"></span>
+					
+				</span>
+			</div>   
+			<!-- Text input-->
+			<div class="form-group">
+			  <div class="col-md-4">
+			  	<div class="input-group input-group-sm">
+			  	  	<span class="input-group-addon">Title</span> <input change-listener id="title" name="title" type="text" placeholder="Title" class="form-control input-md" value="${option.title}">
+			    </div>
+			  </div>
+			  <div class="col-md-4">
+			  	<div class="input-group input-group-sm">
+			  		<span class="input-group-addon">Internal Text</span> <input change-listener id="internalComment" name="internalComment" type="text" placeholder="Internal comment" class="form-control input-md" value="${option.internalComment}">
+			  	</div>
+			  </div>
+			</div> 	
+		
+		    <!-- Text input-->
+			<div class="form-group">
+			 <div class="col-md-4">
+			  	<div class="input-group input-group-sm">
+			  		<span class="input-group-addon">Type</span> 
+			  		<select class="form-control" id="type" name="type" change-listener>
+			  		#foreach($optionType in $optionTypes)
+			  			<option #if ($option.getType()==$optionType.getName()) selected  #end value="$optionType.name" >$optionType.title ($optionType.name)</option>				  	
+			  		#end
+					</select>
+				</div>
+			  </div>		  
+						    
+			  <div class="col-md-4">
+			    <div class="input-group input-group-sm">
+			  		<span class="input-group-addon">Display Type</span> 
+			  		<select class="form-control" id="displayType" name="displayType" change-listener>
+				  		<option #if ($option.getDisplayType()==0) selected  #end value="0" >Text Box</option>
+				  		<option #if ($option.getDisplayType()==1) selected  #end value="1" >Check Box</option>
+				  		<option #if ($option.getDisplayType()==2) selected  #end value="2" >List Box</option>
+				  		<option #if ($option.getDisplayType()==3) selected  #end value="3" >Radio Button</option>
+				  		<option #if ($option.getDisplayType()==4) selected  #end value="4" >Slider</option>
+				  		<option #if ($option.getDisplayType()==5) selected  #end value="5" >Rating</option>
+						<option #if ($option.getDisplayType()==6) selected  #end value="6" >Icon</option>
+					</select>
+				</div>
+			  </div>
+			  
+			  <div class="col-md-4">
+			  	<div class="input-group input-group-sm">
+			  		<span class="input-group-addon">Icon</span> <input change-listener id="icon" name="icon" type="text" placeholder="Icon" class="form-control input-md" value="${option.icon}">
+			  	</div>
+			  </div>			
+			  
+			</div>
+		</fieldset>
+	</form>
+			<ul class="list-group" id="optionItems">
+		      #foreach($optionItem in $option.getOptionItemsAsList()) 
+				#parse("/admin/OptionItem.new.vm")
+			  #end
+			</ul>
+		
+			    	
+
+</li>

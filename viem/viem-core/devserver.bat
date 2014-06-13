@@ -1,0 +1,1 @@
+mvn compile appengine:devserver -o -DskipTests=true

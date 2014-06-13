@@ -4,23 +4,30 @@ import java.util.logging.Logger;
 
 import org.json.simple.JSONObject;
 
+import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Index;
 
+import de.anhquan.viem.core.util.Parser;
+
 @Entity
-public class AppSetting extends NameBasedEntity implements Cacheable {
+@Cache
+public class AppSetting extends NameBasedEntity {
 
 	private static final long serialVersionUID = 1L;
 	public static final String GROUP_BASIC = "Basic";
 	public static final String GROUP_TEXT = "Text";
 	public static final String GROUP_STORE = "Store";
 	public static final String GROUP_APPLICATION = "Application";
+	public static final String GROUP_PRODUCT = "Product";
+
 	public static final String STORE_FAX = "store.fax";
 	public static final String STORE_TELEPHONE = "store.telephone";
 	public static final String STORE_ADDRESS_LINE1 = "store.address_line_1";
 	public static final String STORE_ADDRESS_LINE2 = "store.address_line_2";
 	public static final String APP_FOOTER2 = "app.footer2";
 	public static final String APP_FOOTER1 = "app.footer1";
+	public static final String APP_SIDEBAR_LINKLIST = "app.sidebar.linklist";
 	public static final String APP_SIDEBAR = "app.sidebar";
 	public static final String APP_TOPNAV = "app.topnav";
 	public static final String APP_PAGE_META = "app.pagemeta";
@@ -71,6 +78,9 @@ public class AppSetting extends NameBasedEntity implements Cacheable {
 	public static final String STORE_MODE_DESCRIPTION_2 = "store.mode.description2";
 	public static final String STORE_MODE_TITLE_3 = "store.mode.title3";
 	public static final String STORE_MODE_DESCRIPTION_3 = "store.mode.description3";
+
+	public static final String PRODUCT_DEFAULT_THUMBNAIL = "product.default_thumbnail";
+	public static final String PRODUCT_DEFAULT_IMAGE = "product.default_image";
 
 	@Index
 	private String title;
@@ -130,57 +140,15 @@ public class AppSetting extends NameBasedEntity implements Cacheable {
 		this.defaultValue = defaultValue;
 	}
 
-
-	@Override
-	public void copyFrom(Object other) {
-		log.info("try to copy values from other object.");
-		if (other == null)
-			return;
-
-		AppSetting entity;
-		try {
-			entity = (AppSetting) other;
-			if (entity.getId() != null)
-				this.setId(entity.getId());
-
-			this.name = entity.getName();
-			this.title = entity.getTitle();
-			this.value = entity.getValue();
-			this.defaultValue = entity.getDefaultValue();
-			this.sortValue = entity.getSortValue();
-			this.group = entity.getGroup();
-		} catch (Exception e) {
-			log.info("Exception when copyFrom other AppSetting entity." + e);
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	public String toJSON() {
-		JSONObject json = new JSONObject();
-		json.put("name", this.name);
-		json.put("title", this.title);
-		json.put("value", this.value);
-		json.put("defaultValue", this.defaultValue);
-		json.put("group", this.group);
-		json.put("sortValue", this.sortValue);
-		return json.toJSONString();
-	}
-
 	public void fromJSON(JSONObject json) {
 		if (json == null)
 			return;
-		this.name = (String) json.get("name");
-		this.title = (String) json.get("title");
-		this.value = (String) json.get("value");
-		this.defaultValue = (String) json.get("defaultValue");
-		this.group = (String) json.get("group");
-		try {
-			Object o = json.get("sortValue");
-			this.sortValue = Integer.parseInt(o.toString());
-		} finally {
-			this.sortValue = 0;
-		}
-
+		this.name = Parser.parseString( json.get("name"));
+		this.title = Parser.parseString( json.get("title"));
+		this.value = Parser.parseString( json.get("value"));
+		this.defaultValue = Parser.parseString( json.get("defaultValue"));
+		this.group = Parser.parseString( json.get("group"));
+		this.sortValue = Parser.parseInt(json.get("sortValue"));
 	}
 	
 	@Override
@@ -217,6 +185,23 @@ public class AppSetting extends NameBasedEntity implements Cacheable {
 		}
 
 		return groupCompareValue;
+	}
+
+	public void restoreDefault() {
+		this.value = this.defaultValue;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public JSONObject toJSONObject() {
+		JSONObject json = new JSONObject();
+		json.put("name", this.name);
+		json.put("title", this.title);
+		json.put("value", this.value);
+		json.put("defaultValue", this.defaultValue);
+		json.put("group", this.group);
+		json.put("sortValue", this.sortValue);
+		return json;
 	}
 
 

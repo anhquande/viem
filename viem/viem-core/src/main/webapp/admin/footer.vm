@@ -1,0 +1,22 @@
+ <div class="container">
+    <hr>
+    <footer>
+        <div class="row">
+            <div class="col-lg-12">
+                <p>$footer1
+                </p>
+                <p>$footer2
+                </p>
+            </div>
+        </div>
+    </footer>
+</div>
+<!-- /.container -->
+
+<script src="/base/js/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script src="/base/plugins/jquery-ui/jquery-ui-1.10.4.min.js"></script>
+<script src="/base/js/bootstrap.min.js"></script>
+<script src="/base/js/jquery.form.js"></script>
+<script src="/base/plugins/jte/jquery-te-1.4.0.min.js"></script>
+<script src="/base/plugins/multiselect/bootstrap-multiselect.js"></script>
+<script type="text/javascript" src="/base/plugins/multiselect2side/multiselect.js"></script>

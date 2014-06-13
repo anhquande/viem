@@ -1,6 +1,0 @@
-<div class="list-group">
-     #foreach($item in $sidebar)
-        	<a href="$item.url" class="list-group-item #if ($velocityCount==1)  list-group-item-success #end ">$item.title</a>
-        	
-    #end
-</div>

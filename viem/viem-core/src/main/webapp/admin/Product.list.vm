@@ -1,0 +1,98 @@
+
+	#parse("/admin/header.vm")	
+
+	<div class="container">    
+			<div class="page-header">
+				<form toolbar-async action="${basePath}" method="post" class="pull-right">
+					<input type="hidden" name="action" value="">   
+						<span class="tooltip-container">
+							<span name="toolbar-loading-indicator" style="display:none"></span><span name="toolbar-loading-msg"></span>
+						
+							<a href="${basePath}?action=create" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="" data-original-title="Create new product"><i class="fa fa-plus"></i> </a>
+							<button class="btn btn-default" type="submit" name="btClearAll" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete all"><i class="fa fa-trash-o"></i> </button>
+							<a href="${basePath}?action=export2json" class="btn btn-default" name="btExport" data-toggle="tooltip" data-placement="top" title="" data-original-title="Export database to JSON"><i class="fa fa-save"></i> </a>
+							<button class="btn btn-default" type="submit" name="btImport" data-toggle="tooltip" data-placement="top" title="" data-original-title="Import from JSON"><i class="fa fa-upload"></i> </button>
+						</span>
+				 </form>		
+				 <h4>$className Manager <small>
+				 	<div class="btn-group">
+  						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+					    Filter by $filterBy<span class="caret"></span>
+					  </button>
+					  <ul class="dropdown-menu" role="menu">
+					    	<li><a href="${basePath}">Show all</a></li>
+					    	<li class="divider"></li>
+					    #foreach($cat in $categories)
+							<li><a href="${basePath}?filter=$cat.name">$cat.title</a></li>
+						#end
+					  </ul>
+					</div>
+				 </small></h4>
+			</div>
+			
+			<div id="uploadForm" class="well well-sm" >
+				<form fileupload-async action="${basePath}" method="post" enctype="multipart/form-data">
+					<div class="input-append">
+						<input id="importedFileName" class="input-large" type="text">
+						<a class="btn" onclick="$('input[name=importedFile]').click();">Browse</a>
+						<input class="btn" type="submit" value="Start Import">
+					</div>
+					
+			        <input style="display:none" type="file" name="importedFile">			        
+			    </form>
+			    
+			    <div class="progress">
+			        <div class="bar"></div >
+			        <div class="percent">0%</div >
+			    </div>
+			    
+			    <div id="status"></div>
+			</div>
+		   	<ul class="list-group" id="sortable">
+		        #foreach($entity in $entities) 
+		          #parse("/admin/Product.new.vm")
+		        #end
+			</ul>
+	</div>
+	#parse("/admin/footer.vm")
+	
+	<script>
+  		$(function() {
+  		
+  			$('input[name=importedFile]').change(function() {
+				$('#importedFileName').val($(this).val());
+			});
+  			
+  			
+    		$( "#sortable" ).sortable({
+  				update: function( event, ui ) {
+  					var $frm = $('form[toolbar-async]');
+  					$('span[name=toolbar-loading-indicator]',$frm).show();
+  					$('span[name=toolbar-loading-msg]',$frm).html("Sorting ...").fadeIn(10);
+  					
+					var result = $(this).sortable('toArray').toString();
+					console.log(result); 
+					var obj = {};
+    				obj['action']='sort';
+    				obj['sortedIds'] = result;
+					$.ajax({
+			        	dataType: "json",
+			            type: 'POST',
+			            url: '$basePath',
+			            data: obj,
+			            success: function(jsonObj, status) {
+			            	$('span[name=toolbar-loading-indicator]',$frm).hide();
+			            	$('span[name=toolbar-loading-msg]',$frm).html("<i class='fa fa-check'></i> Sorting finished!").addClass("alert-success").fadeOut(2000);
+			            }
+			        });
+  				}
+			});
+    		
+    		$( "#sortable" ).disableSelection();
+  		});
+  	</script>
+	<script src="/admin/js/admin.entity.list.js"></script>
+	
+</body>
+
+</html>

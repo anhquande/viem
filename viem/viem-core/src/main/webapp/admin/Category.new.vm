@@ -1,0 +1,14 @@
+<li class="list-group-item" id="$entity.id">
+	<form data-async action="${basePath}" method="post">
+		<input type="hidden" name="id" value="$entity.id">
+		<input type="hidden" name="action" value="">   
+		<span class="tooltip-container">									
+			<a href="/category/${entity.name}" target="_blank" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="" data-original-title="View on frontend"><i class="fa fa-play"></i></a>									
+			<button class="btn btn-default" type="submit" name="btDelete" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="fa fa-trash-o"></i></button>
+			<button class="btn btn-default" type="submit" name="btVisible" data-toggle="tooltip" data-placement="top" title="" data-original-title="Show or hide">#if (${entity.isVisible()}) <i class="fa fa-volume-up" style="color:black"></i>#else <i class="fa fa-volume-off" style="color:gray"></i>#end</button>
+		</span>
+		 <a href="${basePath}?action=view&id=$entity.getId()">$entity.getTitle()</a>
+		<span name="loading-indicator" style="display:none"></span><span name="loading-msg"></span>
+		 
+	</form>
+</li>

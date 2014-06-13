@@ -1,0 +1,207 @@
+#parse("/admin/header.vm")	
+ 	
+	<div class="container">    
+		   	<form class="form-horizontal" data-async action="$basePath" method="post">
+			<div class="page-header">
+  				<h4>$className Editor 
+	  				<span class="pull-right"><img src="/base/images/loading.gif" name="loading-indicator" style="display:none" /> 
+	  					<span name="loading-msg"></span>
+	  				</span>
+				</h4>
+			</div>
+		   		<input type="hidden" name="action" value="">   
+		   		<input type="hidden" name="id" value="$entity.id">   
+				<fieldset>
+							
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="name">Name</label>  
+				  <div class="col-md-4">
+				  	<input change-listener id="name" name="name" type="text" placeholder="placeholder" class="form-control input-md" value="$!entity.getName()">
+				  	<span class="help-block"><a name="previewLink" href="/category/$!{entity.name}" target="_blank">View on frontend</a></span>  
+				  </div>
+				</div>
+				
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="visible">Visible</label>  
+				  <div class="col-md-4">
+				  	<input change-listener id="visible" name="visible" type="checkbox" placeholder="placeholder" class="form-control input-md" #if ($entity.isVisible()) checked #end">
+				  </div>
+				</div>
+				
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="title">Title</label>  
+				  <div class="col-md-4">
+				  	<input change-listener id="title" name="title" type="text" placeholder="placeholder" class="form-control input-md" value="$entity.getTitle()">
+				  </div>
+				</div>
+				
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="fullDescription">Full Description</label>  
+				  <div class="col-md-4">
+				  	<textarea class="form-control" id="fullDescription" name="fullDescription">$!entity.getFullDescription()</textarea>
+				  </div>
+				</div>
+				
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="shortDescription">Short Description</label>  
+				  <div class="col-md-4">
+				  	<textarea class="form-control" id="shortDescription" name="shortDescription">$!entity.getShortDescription()</textarea>
+				  </div>
+				</div>
+				
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="subCategories">Sub Categories</label>  
+				  <div class="col-md-4">
+				  	
+				  	<select class="bootstrapMultiselect" multiple="multiple" name="subCategories" >
+				  	#foreach($cat in $categories)
+					  <option value="$cat.id" $cat.selected > $cat.title</option>
+					#end
+					</select>
+				  </div>
+				</div>
+				
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="thumbnail">Thumbnail
+				  </label>  
+				  <div class="col-md-4">
+				  	<input change-listener id="thumbnail" name="thumbnail" type="text" placeholder="" class="form-control input-md" value="$!entity.getThumbnail()">
+				  </div>
+				  <div class="col-md-4">
+				  	<img src="$!entity.getThumbnail()" width="35px"/>
+				  </div>
+				  
+				</div>
+
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="image1">Image 1
+				  </label>  
+				  <div class="col-md-4">
+				  	<input change-listener id="image1" name="image1" type="text" placeholder="" class="form-control input-md" value="$!entity.getImage1()">
+				  </div>
+				  	<img src="$!entity.getImage1()" class="media-object" width="35px" height="35px"/>
+				</div>
+
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="image2">Image 2
+				  </label>  
+				  <div class="col-md-4">
+				  	<input change-listener id="image2" name="image2" type="text" placeholder="" class="form-control input-md" value="$!entity.getImage2()">
+				  </div>
+				  <div class="col-md-4">
+				  	<img src="$!entity.getImage2()" width="35px"/>
+				  </div>
+				</div>
+
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="image3">Image 3
+				  </label>  
+				  <div class="col-md-4">
+				  	<input change-listener id="image3" name="image3" type="text" placeholder="" class="form-control input-md" value="$!entity.getImage3()">
+				  </div>
+				  <div class="col-md-4">
+				  	<img src="$!entity.getImage3()" width="35px"/>
+				  </div>				  
+				</div>
+				
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="sortValue">Sort Value</label>  
+				  <div class="col-md-4">
+				  	<input change-listener id="sortvalue" name="sortValue" type="text" placeholder="" class="form-control input-md" value="$!entity.getSortValue()">
+				  </div>
+				</div>
+				
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="template">Template</label>  
+				  <div class="col-md-4">
+				  	<input change-listener id="template" name="template" type="text" placeholder="template default is 'default'" class="form-control input-md" value="$!entity.getTemplate()">
+				  </div>
+				</div>
+				
+				<!-- Button (Double) -->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="button1id"></label>
+				  <div class="col-md-8">
+				  	<button class="btn btn-default" type="submit" name="btSave" data-toggle="tooltip" data-placement="top" title="" data-original-title="Save"><i class="fa fa-floppy-o"></i> Save</button>
+				  	<button class="btn btn-default" type="submit" name="btCancel" data-toggle="tooltip" data-placement="top" title="" data-original-title="Cancel"><i class="fa fa-undo"></i> Back</button>
+				  </div>
+				</div>
+				
+				</fieldset>
+			</form>
+	</div>
+	
+	<div class="container">
+		<div class="col-md-5">
+			<select name="allProducts" class="col-md-12" size="10" multiple="multiple" multiselect2side>
+			#foreach($product in $allProducts)
+				<option value="$product.id">${product.name}. ${product.title}</option>
+			#end
+
+			</select>
+		</div>
+		
+		<div class="col-md-2">
+			<button type="button" id="btMoveAllRight" class="btn btn-block"><i class="fa fa-angle-double-right"></i></button>
+			<button type="button" id="btMoveRight" class="btn btn-block"><i class="fa fa-angle-right"></i></button>
+			<button type="button" id="btMoveLeft" class="btn btn-block"><i class="fa fa-angle-left"></i></button>
+			<button type="button" id="btMoveAllLeft" class="btn btn-block"><i class="fa fa-angle-double-left"></i></button>
+		</div>
+		
+		<div class="col-md-5">
+	   	<form product2category action="$basePath" method="post">
+	   		<input type="hidden" name="action" value="">   
+	   		<input type="hidden" name="name" value="$entity.getName()">   
+			<select name="selectedProducts" id="selectedProducts" class="col-md-12" size="10" multiple="multiple">
+				#foreach($product in $products)
+				<option value="$product.id">${product.name}. ${product.title}</option>
+				#end
+			</select>
+		  	<button class="btn btn-default" type="submit" name="btSaveSelectedProducts" ><i class="fa fa-floppy-o"></i> Save</button>
+		</form>
+		</div>
+	</div>
+
+	#parse("/admin/footer.vm")
+	
+	<script src="/admin/js/admin.entity.edit.js"></script>
+	<script>
+	$(document).ready(function() {
+		$('.bootstrapMultiselect').bootstrapMultiselect(
+			{
+				nonSelectedText: 'You can select multiple categories',       		       		
+				enableFiltering: true,
+				filterBehavior: 'both',
+				selectAllText: 'Select all',
+				selectAllValue: 'multiselect-all',
+				includeSelectAllOption: true,
+				includeSelectAllIfMoreThan: 3,
+				includeSelectAllDivider: true,
+				numberDisplayed: 20,
+				checkboxName: 'subCategories'
+			});
+		});
+		
+		$('select[multiselect2side]').multiselect({
+			right: '#selectedProducts',
+			rightAll: '#btMoveAllRight',
+			rightSelected: '#btMoveRight',
+			leftSelected: '#btMoveLeft',
+			leftAll: '#btMoveAllLeft'
+		});
+	
+</script>
+
+</body>
+</html>

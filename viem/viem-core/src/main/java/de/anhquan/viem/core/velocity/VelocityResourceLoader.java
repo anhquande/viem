@@ -35,7 +35,8 @@ public class VelocityResourceLoader extends ResourceLoader {
         throw new ResourceNotFoundException(template);
     }
  
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public void init(ExtendedProperties configuration) {
         paths = configuration.getVector("path");
     }

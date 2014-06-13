@@ -1,0 +1,84 @@
+<li option-item class="list-group-item"  id="${optionItem.id}">
+   	<form class="form-horizontal" option-item action="${basePath}" method="post">
+   		<input type="hidden" name="id" value="${entity.id}">
+		<input type="hidden" name="optionId" value="${option.id}">
+		<input type="hidden" name="optionItemId" value="${optionItem.id}">
+		<input type="hidden" name="action" value="">
+   	
+   		<fieldset>
+			<div class="form-group">
+       			<label class="col-md-4 control-label">
+       				<span name="loading-indicator" class="loading-indicator" style="display:none"></span><span name="loading-msg"></span>
+					<span class="strong">OptionItem</span> #$optionItem.id
+       			</label>  
+       			<div class="col-md-4">
+					<span class="tooltip-container">	
+					
+						<button class="btn btn-default" type="submit" name="btDeleteOptionItem" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete me"><i class="fa fa-trash-o"></i></button>
+						<button class="btn btn-default" type="submit" name="btUpdateOptionItem" data-toggle="tooltip" data-placement="top" title="" data-original-title="Save me"><i class="fa fa-save"></i></button>
+						<button class="btn btn-default" type="submit" name="btDuplicateOptionItem" data-toggle="tooltip" data-placement="top" title="" data-original-title="Duplicate me"><i class="fa fa-copy"></i></button>
+					</span>
+       			</div>
+			</div>   
+			
+			<!-- Radio input-->
+			<div class="form-group">
+				<div class="col-md-4">
+					<div class="input-group input-group-sm">
+						<span class="input-group-addon">Title</span> 
+						<input change-listener id="title" name="title" type="text" placeholder="Image" class="form-control input-md" value="${optionItem.title}">
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="input-group input-group-sm">
+						<span class="input-group-addon">Price</span>
+						<input change-listener id="price" name="price" type="text" placeholder="price" class="form-control input-md" value="${optionItem.price}">
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="input-group input-group-sm">
+						<span class="input-group-addon">Weight</span>
+						<input change-listener id="weight" name="weight" type="text" placeholder="weight" class="form-control input-md" value="${optionItem.weight}">
+					</div>
+				</div>
+			</div>			
+			
+			<!-- Text input-->
+			<div class="form-group">
+				<div class="col-md-4">
+					<div class="input-group input-group-sm">
+						<span class="input-group-addon">Internal</span>
+						<input change-listener id="internalComment" name="internalComment" type="text" placeholder="internalComment" class="form-control input-md" value="${optionItem.internalComment}">
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="input-group input-group-sm">
+						<span class="form-control input-md">Show this option item</span>
+						<span class="input-group-addon">
+							<input change-listener id="visible" name="visible" type="checkbox" #if (${optionItem.visible}==true) checked #end>
+						</span>
+					</div>
+				</div>
+				
+			</div>	
+			
+			<div class="form-group">
+				<div class="col-md-4">
+					<div class="input-group input-group-sm">
+						<span class="input-group-addon">Image</span>
+						<input change-listener id="image" name="image" type="text" placeholder="Image" class="form-control input-md" value="${optionItem.image}">
+					</div>
+				</div>
+			
+				<div class="col-md-4">
+					<div class="input-group input-group-sm">
+						<span class="form-control input-md">Mark it as default</span>
+						<span class="input-group-addon">
+							<input change-listener id="isDefault" name="isDefault" type="checkbox" #if (${optionItem.isDefault()}==true) checked #end>
+						</span>
+					</div>
+				</div>
+			</div>	
+		</fieldset>
+	</form>
+</li>

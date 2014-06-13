@@ -2,38 +2,42 @@ package de.anhquan.viem.core.servlet;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.json.simple.JSONObject;
 
 import com.google.inject.Inject;
 
+import de.anhquan.viem.core.ApplicationError;
+import de.anhquan.viem.core.annotation.ServletPath;
 import de.anhquan.viem.core.dao.AppSettingDao;
-import de.anhquan.viem.core.dao.cache.AppSettingManager;
+import de.anhquan.viem.core.json.AppSettingImporter;
+import de.anhquan.viem.core.json.ParseJSONException;
 import de.anhquan.viem.core.model.AppSetting;
-import de.anhquan.viem.core.util.AppSettingImporter;
-import de.anhquan.viem.core.util.ParseSettingException;
 
+@ServletPath(value="/admin/setting")
 public class AppSettingsServlet extends AbstractServlet {
 
 	private static final long serialVersionUID = 8191489816403471099L;
 	public static final Logger log = Logger.getLogger(AppSettingsServlet.class.getName());
 	
-	AppSettingDao settingDao;
-	
 	@Inject
-	public AppSettingsServlet(
-			AppSettingManager settingManager, AppSettingDao settingDao){
-		super(settingManager);
-		this.settingDao = settingDao;
+	public AppSettingsServlet(AppSettingDao appSettingDao){
+		super(appSettingDao);
 	}
 
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		super.init(config);
+		appSettingDao.createDefaultSettings();
+	}
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void processJsonRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -41,47 +45,26 @@ public class AppSettingsServlet extends AbstractServlet {
 		String action = StringUtils.trimToEmpty(request.getParameter("action"));		
 		String key = StringUtils.trimToEmpty(request.getParameter("key"));
 		String value = StringUtils.trimToEmpty(request.getParameter("value"));
-		AppSetting setting = settingManager.findByKey(key);
-		JSONObject 	json = new JSONObject();
+		AppSetting setting = appSettingDao.findByKey(key);
 
-		if ("clearall".compareToIgnoreCase(action)==0){
-			List<AppSetting> settings = settingDao.getAll();
-			settingDao.delete(settings);
-			settingManager.clearCache();
-			replyOk(response, null);
-			return;
-		}
-
-		if ("saveall".compareToIgnoreCase(action)==0){
-			settingManager.writeToDataStore();
-			replyOk(response,null);
-			return;
-		}
-		
-		if ("loadall".compareToIgnoreCase(action)==0){
-			settingManager.readFromDataStore();
-			replyOk(response,null);
+		if ("clearAll".compareToIgnoreCase(action)==0){
+			appSettingDao.clearAll();
+			renderJson(response, ApplicationError.OK);
 			return;
 		}
 		
 		if ("get".compareToIgnoreCase(action)==0){
 			log.info("Get Setting key = "+key);		
 			if (setting!=null){
-				json.put("errno", "0");
-				json.put("errmsg", "Success");
-				if (AppSetting.STORE_NOW.compareTo(key)==0)
-					json.put("value", settingManager.now());
-				else
-					json.put("value", setting.getValue());
-				json.put("key", key);
+				jsonResult.put("value", setting.getValue());
+				jsonResult.put("key", key);
+				renderJson(response, ApplicationError.OK);
 			}
 			else{
-				json.put("errno", "1");
-				json.put("errmsg", "Setting Key ("+key+") not found");
-				json.put("key", key);
-				json.put("value", value);
+				jsonResult.put("key", key);
+				jsonResult.put("value", value);
+				renderJson(response, ApplicationError.ENTITY_NOT_FOUND);
 			}
-			renderJson(response,json);
 			return;
 		}
 		
@@ -89,18 +72,15 @@ public class AppSettingsServlet extends AbstractServlet {
 			log.info("Reset Setting key = "+key);		
 			if (setting!=null){
 				setting.setValue(setting.getDefaultValue());
-				json.put("errno", "0");
-				json.put("errmsg", "Success");
-				json.put("value", setting.getValue());
-				json.put("key", key);
+				jsonResult.put("value", setting.getValue());
+				jsonResult.put("key", key);
+				renderJson(response, ApplicationError.OK);
 			}
 			else{
-				json.put("errno", "1");
-				json.put("errmsg", "Setting Key ("+key+") not found");
-				json.put("key", key);
-				json.put("value", value);
+				jsonResult.put("key", key);
+				jsonResult.put("value", value);
+				renderJson(response, ApplicationError.ENTITY_NOT_FOUND);
 			}
-			renderJson(response,json);
 			return;
 		}
 
@@ -108,19 +88,16 @@ public class AppSettingsServlet extends AbstractServlet {
 			log.info("Update Setting key "+key+" to value = "+value);		
 			if (setting!=null){
 				setting.setValue(value);
-				settingManager.put(setting);
-				json.put("errno", "0");
-				json.put("errmsg", "Success");
-				json.put("key", key);
-				json.put("value", value);
+				appSettingDao.put(setting);
+				jsonResult.put("value", setting.getValue());
+				jsonResult.put("key", key);
+				renderJson(response, ApplicationError.OK);
 			}
 			else{
-				json.put("errno", "1");
-				json.put("errmsg", "Setting Key ("+key+") not found");
-				json.put("key", key);
-				json.put("value", value);
+				jsonResult.put("key", key);
+				jsonResult.put("value", value);
+				renderJson(response, ApplicationError.ENTITY_NOT_FOUND);
 			}
-			renderJson(response,json);
 		}	
 	}
 
@@ -130,23 +107,23 @@ public class AppSettingsServlet extends AbstractServlet {
 		String action = StringUtils.trimToEmpty(request.getParameter("action"));
 		
 		if ("exportall".compareToIgnoreCase(action) == 0) {
-			settingManager.writeToDataStore();
 			response.addHeader("Content-disposition",
 					"attachment; filename=settings.json");
-			List<AppSetting> settings = settingDao.getAll();
+			List<AppSetting> settings = appSettingDao.getAll();
 			renderText(response, exportJSONString(settings));
 			return;
 		}
 
 		if ("reset".compareTo(action)==0){
-			settingManager.resetSettings();
-			renderHtml(response, "/admin/settings-sucess.vm");	
+			appSettingDao.restoreDefaultSettings();
+			renderHtml(response, "/admin/settings-sucess.vm");
+			return;
 		}
-		else {
-			List<AppSetting> settings = settingManager.getAll();
-			context.put("settings", settings);
-			renderHtml(response, "/admin/settings.vm");
-		}
+
+		// if there is no parameters, just show all the settings
+		List<AppSetting> settings = appSettingDao.getAll();
+		context.put("settings", settings);
+		renderHtml(response, "/admin/settings.vm");
 
 	}
 
@@ -165,18 +142,6 @@ public class AppSettingsServlet extends AbstractServlet {
 		return str.toString();
 	}
 
-	private void replyOk(HttpServletResponse response, Map data)
-			throws ServletException, IOException {
-		JSONObject json = new JSONObject();
-		if (data != null)
-			json.putAll(data);
-
-		json.put("errno", 0);
-		json.put("errmsg", "OK");
-
-		renderJson(response, json);
-	}
-	
 	@Override
 	protected void onProcessFileUploadSuccess(String uploadedContent) {
 		log.info("Upload success.Content = "+uploadedContent);
@@ -190,10 +155,10 @@ public class AppSettingsServlet extends AbstractServlet {
 			else{
 				//import to database;
 				for(AppSetting p : settings){
-					settingDao.put(p);
+					appSettingDao.put(p);
 				}
 			}
-		} catch (ParseSettingException e) {
+		} catch (ParseJSONException e) {
 			onProcessFileUploadError(-3, "Invalid JSON on the uploaded content.Content = "+uploadedContent);
 		}
 		

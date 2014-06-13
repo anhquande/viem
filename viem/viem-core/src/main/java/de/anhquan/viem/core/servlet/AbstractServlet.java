@@ -19,13 +19,22 @@ import org.json.simple.JSONObject;
 
 import com.google.inject.Inject;
 
-import de.anhquan.viem.core.dao.cache.AppSettingManager;
+import de.anhquan.viem.core.ApplicationError;
+import de.anhquan.viem.core.Constants;
+import de.anhquan.viem.core.annotation.ServletPath;
+import de.anhquan.viem.core.dao.AppSettingDao;
 import de.anhquan.viem.core.model.AppSetting;
+import de.anhquan.viem.core.model.AppUser;
+import de.anhquan.viem.core.model.EntityNotFoundException;
+import de.anhquan.viem.core.model.InvalidParameterException;
 import de.anhquan.viem.core.model.NavigationItem;
 import de.anhquan.viem.core.util.Formatter;
+import de.anhquan.viem.core.util.Parser;
 import de.anhquan.viem.core.velocity.VelocityEngineManager;
 
 public abstract class AbstractServlet extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
 
 	protected static final String ENCODING_UTF_8 = "UTF-8";
 
@@ -33,7 +42,7 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	protected static final String TEXT_HTML = "text/html";
 
-	protected AppSettingManager settingManager;
+	protected AppSettingDao appSettingDao;
 
 	protected VelocityContext context;
 	
@@ -45,49 +54,57 @@ public abstract class AbstractServlet extends HttpServlet {
 	protected String currentTheme;
 	
 	protected String servletBasePath;
+	
+	protected final JSONObject jsonResult;
+
 
 	@Inject
-	public AbstractServlet(AppSettingManager settingManager) {
+	public AbstractServlet(AppSettingDao appSettingDao) {
 		super();
 		if (this.getClass().isAnnotationPresent(ServletPath.class)){
 			ServletPath ann = this.getClass().getAnnotation(ServletPath.class);
-			this.servletBasePath = ann.basePath();
+			this.servletBasePath = ann.value();
 		}
 
-		this.settingManager = settingManager;
+		this.appSettingDao = appSettingDao;
+		this.jsonResult = new JSONObject(); 
 		context = new VelocityContext();
 	}
 
 	public void rereadSettings(){
-		currentTheme = "/themes/"+settingManager.getSettingValue(AppSetting.APP_THEME);
+		log.info("reread settings ...");
+		currentTheme = "/themes/"+appSettingDao.getSettingValue(AppSetting.APP_THEME);
 		context.put("theme", currentTheme);
-		context.put("pageTitle", settingManager.getSettingValue(AppSetting.APP_TITLE));
-		context.put("appTitle", settingManager.getSettingValue(AppSetting.APP_TITLE));
-		context.put("appVersion", settingManager.getSettingValue(AppSetting.APP_VERSION));
-		context.put("footer1", settingManager.getSettingValue(AppSetting.APP_FOOTER1));
-		context.put("footer2", settingManager.getSettingValue(AppSetting.APP_FOOTER2));
-		context.put("storeAddressLine1", settingManager.getSettingValue(AppSetting.STORE_ADDRESS_LINE1));
-		context.put("storeAddressLine2", settingManager.getSettingValue(AppSetting.STORE_ADDRESS_LINE2));		
-		context.put("storeTelephone", settingManager.getSettingValue(AppSetting.STORE_TELEPHONE));
-		context.put("storeFax", settingManager.getSettingValue(AppSetting.STORE_FAX));		
-		context.put("storeWebsite", settingManager.getSettingValue(AppSetting.STORE_WEBSITE));
-		context.put("storeEmail", settingManager.getSettingValue(AppSetting.STORE_EMAIL));
-		context.put("storeName", settingManager.getSettingValue(AppSetting.STORE_NAME));
-		context.put("storeOpeningTime", settingManager.getSettingValue(AppSetting.STORE_OPENING_TIME));
+		context.put("pageTitle", appSettingDao.getSettingValue(AppSetting.APP_TITLE));
+		context.put("appTitle", appSettingDao.getSettingValue(AppSetting.APP_TITLE));
+		context.put("appVersion", appSettingDao.getSettingValue(AppSetting.APP_VERSION));
+		context.put("footer1", appSettingDao.getSettingValue(AppSetting.APP_FOOTER1));
+		context.put("footer2", appSettingDao.getSettingValue(AppSetting.APP_FOOTER2));
+		context.put("storeAddressLine1", appSettingDao.getSettingValue(AppSetting.STORE_ADDRESS_LINE1));
+		context.put("storeAddressLine2", appSettingDao.getSettingValue(AppSetting.STORE_ADDRESS_LINE2));		
+		context.put("storeTelephone", appSettingDao.getSettingValue(AppSetting.STORE_TELEPHONE));
+		context.put("storeFax", appSettingDao.getSettingValue(AppSetting.STORE_FAX));		
+		context.put("storeWebsite", appSettingDao.getSettingValue(AppSetting.STORE_WEBSITE));
+		context.put("storeEmail", appSettingDao.getSettingValue(AppSetting.STORE_EMAIL));
+		context.put("storeName", appSettingDao.getSettingValue(AppSetting.STORE_NAME));
+		context.put("storeOpeningTime", appSettingDao.getSettingValue(AppSetting.STORE_OPENING_TIME));
 		context.put("Formatter", Formatter.INSTANCE);
-		Formatter.LOCALE = settingManager.getSettingValue(AppSetting.STORE_LOCALE);
+		Formatter.LOCALE = appSettingDao.getSettingValue(AppSetting.STORE_LOCALE);
 
-		context.put("refreshInterval", settingManager.getSettingValue(AppSetting.REFRESH_INTERVAL));
-		context.put("currentTime", settingManager.now());
+		context.put("refreshInterval", appSettingDao.getSettingValue(AppSetting.REFRESH_INTERVAL));
+//		context.put("currentTime", appSettingDao.now());
 		context.put("date", new DateTool());
 
-		context.put("logo", settingManager.getSettingValue(AppSetting.APP_LOGO));
-		context.put("pageMeta", settingManager.getSettingValue(AppSetting.APP_PAGE_META));
-		context.put("topnav", NavigationItem.createList(settingManager.getSettingValue(AppSetting.APP_TOPNAV)));
-		context.put("sidebar", NavigationItem.createList(settingManager.getSettingValue(AppSetting.APP_SIDEBAR)));
-		
+		context.put("logo", appSettingDao.getSettingValue(AppSetting.APP_LOGO));
+		context.put("pageMeta", appSettingDao.getSettingValue(AppSetting.APP_PAGE_META));
+		context.put("topnav", NavigationItem.createList(appSettingDao.getSettingValue(AppSetting.APP_TOPNAV)));
+		context.put("sidebar", appSettingDao.getSettingValue(AppSetting.APP_SIDEBAR));
+		context.put("sidebarLinkList", NavigationItem.createList(appSettingDao.getSettingValue(AppSetting.APP_SIDEBAR_LINKLIST)));
+		context.put("defaultProductThumbnail",  appSettingDao.getSettingValue(AppSetting.PRODUCT_DEFAULT_THUMBNAIL));
+		context.put("defaultProductImage",  appSettingDao.getSettingValue(AppSetting.PRODUCT_DEFAULT_IMAGE));
+
 		//HARDCODED
-		String storeMode = settingManager.getSettingValue(AppSetting.STORE_MODE);
+		String storeMode = appSettingDao.getSettingValue(AppSetting.STORE_MODE);
 		context.put("storeMode", storeMode);
 		Integer iStoreMode = 3;
 		try{
@@ -97,30 +114,45 @@ public abstract class AbstractServlet extends HttpServlet {
 		}catch (NumberFormatException e){
 		}
 		
-		context.put("storeModeTitle", settingManager.getSettingValue("store.mode.title"+iStoreMode));
-		context.put("storeModeDescription", settingManager.getSettingValue("store.mode.description"+iStoreMode));	
+		context.put("storeModeTitle", appSettingDao.getSettingValue("store.mode.title"+iStoreMode));
+		context.put("storeModeDescription", appSettingDao.getSettingValue("store.mode.description"+iStoreMode));	
 	}
 	
 	protected abstract void processJsonRequest(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException;
+			HttpServletResponse response) throws ServletException, IOException, EntityNotFoundException, InvalidParameterException;
 	
 	protected abstract void processHtmlRequest(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException;
+			HttpServletResponse response) throws ServletException, IOException, EntityNotFoundException, InvalidParameterException;
 		
-	@Override
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		processRequest(request, response);
-	}
-
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		processRequest(request, response);
+		doPost(request, response);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		try {
+			log.info("doPost ...");
+			processRequest(request, response);
+		} catch (EntityNotFoundException e) {
+			log.severe("Error when doPost. Errmsg = "+e.getMessage());
+			renderJson(response, ApplicationError.ENTITY_NOT_FOUND);
+		} catch (InvalidParameterException e) {
+			log.severe("Error when doPost. Errmsg = "+e.getMessage());
+			jsonResult.put("reason", e.getMessage());
+			renderJson(response, ApplicationError.INVALID_PARAMETER);
+		}
 	}
 
 	protected void processRequest(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+			HttpServletResponse response) throws ServletException, IOException, EntityNotFoundException, InvalidParameterException {
+		
+		log.info("processResquest ...");
+		AppUser user = (AppUser) request.getSession().getAttribute(Constants.SESSION_ADMIN_USER);
+		context.put("user", user);
 		rereadSettings();
 
 		// check if this is the file upload request
@@ -132,10 +164,9 @@ public abstract class AbstractServlet extends HttpServlet {
 		}
 
 		//from now on process as normal 
-
 		response.setCharacterEncoding(ENCODING_UTF_8);
 		String accept = request.getHeader("Accept");
-		
+		log.info("Accept = "+accept);
 		if ((accept!=null) && (accept.contains(APPLICATION_JSON))){
 			response.setContentType(APPLICATION_JSON);
 			processJsonRequest(request, response);
@@ -205,10 +236,13 @@ public abstract class AbstractServlet extends HttpServlet {
 		log.info(errmsg);
 	}
 
-	protected final void renderJson(HttpServletResponse response, JSONObject json) throws ServletException, IOException{
+	@SuppressWarnings("unchecked")
+	protected final void renderJson(HttpServletResponse response, ApplicationError error) throws ServletException, IOException{
 		PrintWriter writer;
 		writer = response.getWriter();
-		writer.write(json.toJSONString());
+		jsonResult.put("errno", error.getErrorNumber());
+		jsonResult.put("errmsg", error.getErrorMessage());
+		writer.write(jsonResult.toJSONString());
 		writer.flush();
 		writer.close();
 	}
@@ -233,13 +267,21 @@ public abstract class AbstractServlet extends HttpServlet {
 		writer.flush();
 		writer.close();
 	}
-
-	protected void redirect(HttpServletRequest request,
-			HttpServletResponse response, String url) throws ServletException, IOException {
-		response.sendRedirect(url);
-	}
 	
+	protected void replyPageNotFound(HttpServletResponse response) throws ServletException, IOException {
+		renderHtml(response, currentTheme+"/pages/404.vm");
+	}
+
 	public String getServletBasePath(){
 		return this.servletBasePath;
+	}
+	
+	/**
+	 * Read ID from request param
+	 * @param request
+	 * @return 0 if the ID is not specified, otherwise the ID number 
+	 */
+	public Long readId(HttpServletRequest request) {
+		return Parser.parseLong(request.getParameter("id"));
 	}
 }

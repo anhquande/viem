@@ -1,1 +1,1 @@
-mvn -pl viem-web --also-make  clean install  -o -DskipTests=true
+mvn -pl viem-core --also-make  clean install  -o -DskipTests=true

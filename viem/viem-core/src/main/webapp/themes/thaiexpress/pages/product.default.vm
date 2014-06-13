@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    #parse("$theme/pages/common-header.vm")
+</head>
+<body>
+	#parse("$theme/pages/header.vm")
+	
+    <div class="container">
+        <div class="row">
+			<!-- Sidebar -->
+            <div class="col-md-3">
+				#parse ("$theme/pages/categories.nav.vm")
+            </div>
+			
+			<!-- Main Container -->
+            <div class="col-md-9">
+				<div class="col-md-12">
+					<strong>Artikel-Nr. ${product.getName()}</strong>
+					<h4>$product.title</h4>
+				</div>
+				<div class="col-md-8">
+					<div class="col-md-12">$product.fullDescription</div>
+				#foreach($opt in $productOptions)
+					<div class="col-md-3">$opt.title</div>
+					<div class="col-md-9">
+					#if ($opt.displayType == 0)
+						#foreach($optItem in ${opt.getOptionItemsAsList()})
+							<div>
+								<label>
+									$optItem.title
+								</label>
+							</div>							
+						#end
+					#elseif ($opt.displayType == 1)
+						#foreach($optItem in ${opt.getOptionItemsAsList()})
+							<div class="checkbox">
+								<label>
+								<input type="checkbox" name="optionsRadios" id="$optItem.id" value="$optItem.id" price="$optItem.price" #if($optItem.isDefault())checked #end>
+								$optItem.title
+								</label>
+							</div>							
+						#end
+					#elseif ($opt.displayType == 2)
+						<select class="form-inline" id="type" name="type" change-listener>
+						#foreach($optItem in ${opt.getOptionItemsAsList()})
+							<option value="$optItem.id" price="$optItem.price" #if($optItem.isDefault())selected #end>$optItem.title</option>				  							
+						#end
+						</select>	
+					#elseif ($opt.displayType == 3)
+						#foreach($optItem in ${opt.getOptionItemsAsList()})
+							<div class="radio">
+								<label>
+								<input type="radio" name="$opt.id" id="$optItem.id" price="$optItem.price" value="$optItem.id" #if($optItem.isDefault())checked #end>
+								$optItem.title
+								</label>
+							</div>							
+						#end
+					#elseif ($opt.displayType == 4)
+						<div id="slider">
+						#foreach($optItem in ${opt.getOptionItemsAsList()})
+							<input type="radio" name="$opt.id" id="$optItem.id" price="$optItem.price" value="$optItem.id" #if($optItem.isDefault())checked #end>
+							<label>$optItem.title</label>
+						#end
+						</div>
+					#elseif ($opt.displayType == 5)
+						<div class="input select rating">
+						<select class="form-inline rating" id="type" name="type" rating>
+						#foreach($optItem in ${opt.getOptionItemsAsList()})
+							<option value="$optItem.id" price="$optItem.price" #if($optItem.isDefault())selected #end>$optItem.title</option>				  							
+						#end
+						</select>
+						</div>
+					#end
+					
+					</div>
+				#end
+			
+					<input type="hidden" name="basePrice" id="basePrice" value="$product.basePrice">
+					
+					<input type="text" name="endPrice" id="endPrice" value="$product.basePrice">
+					
+					<div class="col-md-3">Einzelpreis</div>
+					<div class="col-md-9" id="endPriceDisplay">
+						${Formatter.formatCurrency($product.basePrice)} &euro;
+					</div>
+					
+					<div class="col-md-3">Quantity</div>
+					<div class="col-md-9">
+						  <input id="quantity" name="1" value="1" spinner>
+					</div>
+				</div>
+				
+				<div class="col-md-4">
+					#if(${product.getImage()}) <img src="${product.getImage()}">#end
+				</div>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+
+   #parse("$theme/pages/footer.vm")
+   
+</body>
+
+</html>

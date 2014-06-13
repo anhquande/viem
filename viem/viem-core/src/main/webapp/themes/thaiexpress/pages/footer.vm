@@ -1,0 +1,42 @@
+<footer id="bottom">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 openingtime">
+        <h4 style="color:#CA0000"><i class="fa fa-home"></i> Adresse</h4>									
+        <p><strong>$storeName</strong></p>
+        <p>$storeAddressLine1</p>
+        <p>$storeAddressLine2</p>         
+      </div> 
+      <div class="col-md-3 openingtime">
+          <h4 style="color:#CA0000"><i class="fa fa-envelope"></i> Kontakt</h4>
+          <p><i class="fa fa-phone"></i> $storeTelephone</p>
+          <p><i class="fa fa-print"></i> $storeFax</p>
+          <p><i class="fa fa-anchor"></i> $storeWebsite</p>
+          
+      </div>
+      <div class="col-md-3 openingtime">
+          <h4 style="color:#CA0000"><i class="fa fa-clock-o"></i> Öffnungszeiten</h4>
+          $storeOpeningTime
+      </div>
+    </div>
+    <hr>
+    <div class="container">
+      <p>$footer1</p>
+      <p>$footer2</p>
+    </div>
+  </div>
+
+</footer>
+
+<!-- Core JavaScript -->
+<script src="/base/js/jquery-1.11.1.min.js"></script>
+<script src="/base/plugins/jquery-ui/jquery-ui-1.10.4.min.js"></script>
+<script src="/base/js/bootstrap.min.js"></script>
+
+<!-- Plugins JavaScript -->
+<script src="/base/plugins/lightbox/ekko-lightbox.js"></script>
+<script src="/base/plugins/radios-to-slider/jquery.radios-to-slider.min.js"></script>
+<script src="/base/plugins/barrating/jquery.barrating.min.js"></script>
+
+<!-- Custom JavaScript -->
+<script src="$theme/js/script.js"></script>	
