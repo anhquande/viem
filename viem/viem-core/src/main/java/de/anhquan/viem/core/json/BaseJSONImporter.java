@@ -34,7 +34,7 @@ public class BaseJSONImporter<T extends BaseEntity> implements JSONImporter<T>{
 			
 			for(int i=0;i<json.size();i++){
 				JSONObject item = (JSONObject) json.get(i);
-				System.out.println("Parsed Object: "+item.toJSONString());
+				log.info("Parsed Object: "+item.toJSONString());
 				T p;
 				try {
 					p = clazz.newInstance();

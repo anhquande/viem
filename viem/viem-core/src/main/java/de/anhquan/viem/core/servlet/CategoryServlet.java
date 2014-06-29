@@ -16,14 +16,12 @@ import com.google.inject.Inject;
 
 import de.anhquan.viem.core.Constants;
 import de.anhquan.viem.core.annotation.ServletPath;
-import de.anhquan.viem.core.dao.AppSettingDao;
-import de.anhquan.viem.core.servlet.AbstractServlet;
 import de.anhquan.viem.core.dao.CategoryDao;
 import de.anhquan.viem.core.dao.ProductCategoryRelationDao;
 import de.anhquan.viem.core.dao.ProductDao;
+import de.anhquan.viem.core.model.Category;
 import de.anhquan.viem.core.model.Page;
 import de.anhquan.viem.core.model.Product;
-import de.anhquan.viem.core.model.Category;
 
 @ServletPath(value = "/category/*")
 public class CategoryServlet extends AbstractServlet {
@@ -34,9 +32,7 @@ public class CategoryServlet extends AbstractServlet {
 	ProductCategoryRelationDao pcRelDao;
 
 	@Inject
-	public CategoryServlet(AppSettingDao appSettingDao,
-			CategoryDao productCategoryDao, ProductDao productDao, ProductCategoryRelationDao pcRelDao) {
-		super(appSettingDao);
+	public CategoryServlet(CategoryDao productCategoryDao, ProductDao productDao, ProductCategoryRelationDao pcRelDao) {
 		this.categoryDao = productCategoryDao;
 		this.productDao = productDao;
 		this.pcRelDao = pcRelDao;
@@ -95,6 +91,7 @@ public class CategoryServlet extends AbstractServlet {
 		page.setDescription(category.getShortDescription());
 		page.setName(getServletBasePath().replaceFirst("\\*", category.getName()));
 		context.put("page", page);
+		context.put("url", config.getSiteUrl()+page.getName());
 
 		renderHtml(response, currentTheme+"/pages/category."+template+".vm");
 	}

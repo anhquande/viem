@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>    
 	#parse("$theme/pages/common-header.vm")
@@ -22,17 +22,17 @@
             	#foreach($product in $products)
             	<ul class="media-list">
 				  <li class="media">
-				  #if ($product.image1)
+				  #if (!$StringUtils.isEmpty($product.image1))
 				    <a class="pull-left" href="$product.image1" data-toggle="lightbox" data-type="image" data-title="$product.title (${Formatter.formatCurrency($product.basePrice)} €)" data-footer="$product.shortDescription">
-				      #if ($product.thumbnail)
-						<img class="media-object" src="$product.thumbnail" alt="..." class="img-responsive">
+				      #if (!$StringUtils.isEmpty($product.thumbnail))
+						<img class="media-object" src="$product.thumbnail" alt="111" class="img-responsive">
 					  #else
-						<img class="media-object" src="$product.image1" width="60px" height="45px" alt="..." class="img-responsive">
+						<img class="media-object" src="$product.image1" width="60px" height="45px" alt="222" class="img-responsive">
 					  #end
 				    </a>
 				  #else
 				    <a class="pull-left" href="$defaultProductImage" data-toggle="lightbox" data-type="image" data-title="$product.title (${Formatter.formatCurrency($product.basePrice)} €)" data-footer="$product.shortDescription">
-						<img class="media-object" src="$defaultProductThumbnail" alt="..." class="img-responsive">
+						<img class="media-object" src="$defaultProductThumbnail" alt="333" class="img-responsive">
 				    </a>
 				  
 				  #end
@@ -58,7 +58,7 @@
 								#end 							
 								
 								${Formatter.formatCurrency($product.basePrice)} €</h4>
-	                        <h4 class="media-heading"><a href="/product/$product.name">${product.name}. ${product.title}</a></h4>
+	                        <span class="media-heading"><a href="/product/$product.name">${product.name}. ${product.title}</a></span>
 	                        <p>${product.shortDescription}</p>
 				    </div>
 				  </li> 

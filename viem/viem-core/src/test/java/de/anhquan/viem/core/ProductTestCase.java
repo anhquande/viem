@@ -249,6 +249,11 @@ public class ProductTestCase extends LocalServiceTestCase{
 	public void testFind(){
 		showAll();
 		
+		Product dup = new Product();
+		dup.setName("109");
+		dup.setTitle("VIT CURRY");
+		productDao.put(dup);
+		
 		Product p109 = productDao.give("109");
 		assertNotNull(p109);
 		System.out.println("FOUND = "+p109.getTitle());
@@ -257,6 +262,8 @@ public class ProductTestCase extends LocalServiceTestCase{
 		for (Category category : categories) {
 			System.out.println(category.getName());
 		}
+		
+		showAll();
 	}
 	
 	@Test

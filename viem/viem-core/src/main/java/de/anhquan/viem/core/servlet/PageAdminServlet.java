@@ -5,7 +5,6 @@ import java.util.logging.Logger;
 import com.google.inject.Inject;
 
 import de.anhquan.viem.core.annotation.ServletPath;
-import de.anhquan.viem.core.dao.AppSettingDao;
 import de.anhquan.viem.core.dao.PageDao;
 import de.anhquan.viem.core.json.PageImporter;
 import de.anhquan.viem.core.model.Page;
@@ -17,10 +16,10 @@ public class PageAdminServlet extends BaseEntityAdminServlet<Page>  {
 			.getName());
 
 	@Inject
-	public PageAdminServlet(AppSettingDao appSettingDao, 
+	public PageAdminServlet( 
 			PageDao pageDao,
 			PageImporter jsonImporter) {
-		super(appSettingDao, pageDao, jsonImporter);
+		super(pageDao, jsonImporter);
 	}
 
 	private static final long serialVersionUID = -6630427559567895991L;

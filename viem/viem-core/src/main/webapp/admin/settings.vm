@@ -62,7 +62,7 @@
 					      	</span>
 					  	 </div><!-- /input-group -->
 					  	 
-					      <textarea name="value" class="form-control" rows="2" cols="80" >$setting.getValue()</textarea>
+					      <textarea name="value" class="form-control" rows="2" cols="80" >$!setting.getValue()</textarea>
 					    </div><!-- /input-group -->
 					  </div><!-- /.col-lg-12 -->
 		

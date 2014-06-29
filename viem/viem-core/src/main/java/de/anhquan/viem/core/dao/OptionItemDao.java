@@ -26,13 +26,11 @@ public class OptionItemDao extends BaseDao<OptionItem>{
     }
     
 	public void sort(String input){
-		log.info("Sort OptionItem "+input);
 		if ((input==null) || (input.isEmpty()))
 			return;
 		
 		String[] sortedList = input.split(",");
 		int index = 0;
-		log.info("sort count ..."+sortedList.length);
 		for (String name : sortedList) {
 			try{
 				Long id = Long.parseLong(name);

@@ -22,7 +22,6 @@ import com.google.inject.Inject;
 
 import de.anhquan.viem.core.ApplicationError;
 import de.anhquan.viem.core.annotation.ServletPath;
-import de.anhquan.viem.core.dao.AppSettingDao;
 import de.anhquan.viem.core.dao.CategoryDao;
 import de.anhquan.viem.core.dao.DefaultProductDao;
 import de.anhquan.viem.core.dao.OptionDao;
@@ -62,7 +61,7 @@ public class ProductAdminServlet extends BaseEntityAdminServlet<Product> {
 	private OptionItemDao optionItemDao;
 	
 	@Inject
-	public ProductAdminServlet(final AppSettingDao appSettingDao, 
+	public ProductAdminServlet( 
 								final ProductDao productDao, 
 								final CategoryDao categoryDao, 
 								final ProductCategoryRelationDao pcRelDao,
@@ -71,7 +70,7 @@ public class ProductAdminServlet extends BaseEntityAdminServlet<Product> {
 								final OptionTypeDao optionTypeDao,
 								final OptionItemDao optionItemDao,
 								final ProductImporter jsonImporter) {
-		super(appSettingDao, productDao,jsonImporter);
+		super(productDao,jsonImporter);
 		this.categoryDao = categoryDao;
 		this.pcRelDao = pcRelDao;
 		this.optionDao = optionDao;
@@ -455,6 +454,7 @@ public class ProductAdminServlet extends BaseEntityAdminServlet<Product> {
 		List<CategoryRender> renderCategories = new ArrayList<CategoryRender>();
 		for (Category category : categories) {
 			CategoryRender renderCat = new CategoryRender();
+			renderCat.setId(category.getId());
 			renderCat.setName(category.getName());
 			renderCat.setTitle(category.getTitle());
 			if (selectedCategories.contains(category))

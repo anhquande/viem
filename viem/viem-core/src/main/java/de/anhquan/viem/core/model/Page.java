@@ -73,5 +73,5 @@ public class Page extends NameBasedEntity {
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
-	
+
 }

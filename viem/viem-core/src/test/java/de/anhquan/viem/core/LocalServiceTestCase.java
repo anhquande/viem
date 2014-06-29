@@ -6,7 +6,9 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
 
-import de.anhquan.viem.core.dao.AppSettingDao;
+import de.anhquan.config4j.ConfigFactory;
+import de.anhquan.viem.core.dao.ConfigDao;
+import de.anhquan.viem.core.model.AppConfig;
 
 public abstract class LocalServiceTestCase extends AbstractModule{
 
@@ -14,14 +16,16 @@ public abstract class LocalServiceTestCase extends AbstractModule{
 			new LocalUserServiceTestConfig()).setEnvIsAdmin(true)
 			.setEnvIsLoggedIn(true);
 	
-	protected AppSettingDao appSettingDao;
+	protected AppConfig config;
 	protected Injector injector;
+	protected ConfigDao configDao;
 	
 	public void basicSetUp(){
 		localServiceHelper.setUp();
 		injector = Guice.createInjector(this);		
-		appSettingDao = injector.getProvider(AppSettingDao.class).get();
-		System.out.println("Setup");
+		config = ConfigFactory.getConfig(AppConfig.class);
+		
+		configDao = injector.getInstance(ConfigDao.class);
 	}
 	
 	public void basicTearDown(){
@@ -30,7 +34,6 @@ public abstract class LocalServiceTestCase extends AbstractModule{
 	
 	@Override
 	protected void configure() {
-		register(AppSettingDao.class);
 		guiceRegister();
 	}
 

@@ -162,7 +162,7 @@
 		<div class="col-md-5">
 	   	<form product2category action="$basePath" method="post">
 	   		<input type="hidden" name="action" value="">   
-	   		<input type="hidden" name="name" value="$entity.getName()">   
+	   		<input type="hidden" name="id" value="$entity.getId()">   
 			<select name="selectedProducts" id="selectedProducts" class="col-md-12" size="10" multiple="multiple">
 				#foreach($product in $products)
 				<option value="$product.id">${product.name}. ${product.title}</option>

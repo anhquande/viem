@@ -23,6 +23,8 @@ import de.anhquan.viem.core.util.Parser;
 
 @SuppressWarnings("serial")
 public abstract class BaseEntity implements Dto, JSONAble {
+	
+	@IgnoreJson
 	@Id
     protected Long id;
 
@@ -149,38 +151,42 @@ public abstract class BaseEntity implements Dto, JSONAble {
 		Class<?> myCls = this.getClass();
 		List<Field> fields = getFields(myCls);
 		for (Field field : fields) {
-			if (!Modifier.isStatic(field.getModifiers())){
-				field.setAccessible(true);
-				try {
-					String fieldName = field.getName();
-					Class<?> fieldType = field.getType();
-					Object value = json.get(fieldName);
-					if (value!=null) {
-						if (fieldType == String.class) {
-							field.set(this, Parser.parseString(value));
-						}
-						else if ((fieldType == Integer.class) || (fieldType == int.class)) {
-							field.set(this, Parser.parseInt(value));
-						} 
-						else if ((fieldType == Long.class) || (fieldType == long.class)) {
-							field.set(this, Parser.parseLong(value));
-						} 
-						else if ((fieldType == Boolean.class) || (fieldType == boolean.class)) {
-							field.set(this, Parser.parseBoolean(value));
-						}
-						else if ((fieldType == List.class) || (fieldType == Array.class)){
-							//ignore 
-						}
-						else
-							field.set(this, value);
+			if (field.getAnnotation(IgnoreJson.class)!=null)
+				continue;
+			
+			if (Modifier.isStatic(field.getModifiers()))
+				continue;
+			
+			field.setAccessible(true);
+			try {
+				String fieldName = field.getName();
+				Class<?> fieldType = field.getType();
+				Object value = json.get(fieldName);
+				if (value!=null) {
+					if (fieldType == String.class) {
+						field.set(this, Parser.parseString(value));
 					}
-				} catch (IllegalArgumentException e) {
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
+					else if ((fieldType == Integer.class) || (fieldType == int.class)) {
+						field.set(this, Parser.parseInt(value));
+					} 
+					else if ((fieldType == Long.class) || (fieldType == long.class)) {
+						field.set(this, Parser.parseLong(value));
+					} 
+					else if ((fieldType == Boolean.class) || (fieldType == boolean.class)) {
+						field.set(this, Parser.parseBoolean(value));
+					}
+					else if ((fieldType == List.class) || (fieldType == Array.class)){
+						//ignore 
+					}
+					else
+						field.set(this, value);
 				}
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
 			}
-		}
+		} // end for
     }
     
     @Override
@@ -260,11 +266,10 @@ public abstract class BaseEntity implements Dto, JSONAble {
 			if (!Modifier.isStatic(field.getModifiers())){
 				field.setAccessible(true);
 				try {
-					System.out.println("Copy From : "+field.getName());
-					Object value = field.get(other);
-					System.out.println("     value: "+value);
-
-					field.set(this, value);
+					if ("id".compareTo(field.getName())!=0){
+						Object value = field.get(other);
+						field.set(this, value);
+					}
 				} catch (IllegalArgumentException e) {
 					e.printStackTrace();
 				} catch (IllegalAccessException e) {

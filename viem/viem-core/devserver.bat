@@ -1,1 +1,1 @@
-mvn compile appengine:devserver -o -DskipTests=true
+mvn compile appengine:devserver -o -DskipTests=true -T 2C

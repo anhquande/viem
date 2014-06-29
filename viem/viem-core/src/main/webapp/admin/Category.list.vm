@@ -6,11 +6,11 @@
 				<form toolbar-async action="${basePath}" method="post" class="pull-right">
 					<input type="hidden" name="action" value="">   
 						<span class="tooltip-container">
+							<span name="loading-indicator" style="display:none"></span><span name="loading-msg"></span>
 							<a href="${basePath}?action=create" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="" data-original-title="New"><i class="fa fa-plus"></i> </a>
 							<button class="btn btn-default" type="submit" name="btClearAll" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete all in cache and database"><i class="fa fa-trash-o"></i> </button>
 							<a href="${basePath}?action=export2json" class="btn btn-default" name="btExport" data-toggle="tooltip" data-placement="top" title="" data-original-title="Export database to json (also save cache to database)"><i class="fa fa-save"></i> </a>
 							<button class="btn btn-default" type="submit" name="btImport" data-toggle="tooltip" data-placement="top" title="" data-original-title="Import from JSON file to database. Cache does not change."><i class="fa fa-upload"></i> </button>
-							<span name="loading-indicator" style="display:none"></span><span name="loading-msg"></span>
 						</span>
 				 </form>		
 				 <h4>$className Manager <small></small></h4>
@@ -45,11 +45,10 @@
     		$( "#sortable" ).sortable({
   				update: function( event, ui ) {
   					var $frm = $('form[toolbar-async]');
-  					$('span[name=toolbar-loading-indicator]',$frm).show();
-  					$('span[name=toolbar-loading-msg]',$frm).html("Sorting ...").fadeIn(10);
+  					$('span[name=loading-indicator]',$frm).show();
+  					$('span[name=loading-msg]',$frm).html("Sorting ...").fadeIn(10);
   					
 					var result = $(this).sortable('toArray').toString();
-					console.log(result); 
 					var obj = {};
     				obj['action']='sort';
     				obj['sortedIds'] = result;
@@ -59,8 +58,8 @@
 			            url: '$basePath',
 			            data: obj,
 			            success: function(jsonObj, status) {
-			            	$('span[name=toolbar-loading-indicator]',$frm).hide();
-			            	$('span[name=toolbar-loading-msg]',$frm).html("<i class='fa fa-check'></i> Sorting finished!").addClass("alert-success").fadeOut(2000);
+			            	$('span[name=loading-indicator]',$frm).hide();
+			            	$('span[name=loading-msg]',$frm).html("<i class='fa fa-check'></i> Sorting finished!").addClass("alert-success").fadeOut(2000);
 			            }
 			        });
   				}

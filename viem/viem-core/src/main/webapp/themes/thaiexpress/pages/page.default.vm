@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     #parse("$theme/pages/common-header.vm")
@@ -11,19 +11,7 @@
 	
     <div class="container">
 
-            <div class="col-md-3">
-				<div class="panel">
-					#parse ("$theme/pages/linklist.sidebar.vm")
-				</div>
-				
-				$!sidebar				
-				
-            </div>
-            <div class="col-md-9">
-            
-                $page.content
-
-            </div>
+        $page.content
 
 
     </div>

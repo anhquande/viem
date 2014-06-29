@@ -12,18 +12,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
-import org.apache.velocity.tools.generic.DateTool;
 import org.json.simple.JSONObject;
 
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.inject.Inject;
 
+import de.anhquan.config4j.ConfigFactory;
 import de.anhquan.viem.core.ApplicationError;
 import de.anhquan.viem.core.Constants;
 import de.anhquan.viem.core.annotation.ServletPath;
-import de.anhquan.viem.core.dao.AppSettingDao;
-import de.anhquan.viem.core.model.AppSetting;
+import de.anhquan.viem.core.model.AppConfig;
 import de.anhquan.viem.core.model.AppUser;
 import de.anhquan.viem.core.model.EntityNotFoundException;
 import de.anhquan.viem.core.model.InvalidParameterException;
@@ -42,8 +44,6 @@ public abstract class AbstractServlet extends HttpServlet {
 
 	protected static final String TEXT_HTML = "text/html";
 
-	protected AppSettingDao appSettingDao;
-
 	protected VelocityContext context;
 	
 	private static final Logger log = Logger
@@ -56,66 +56,63 @@ public abstract class AbstractServlet extends HttpServlet {
 	protected String servletBasePath;
 	
 	protected final JSONObject jsonResult;
+	
+	protected final AppConfig config;
 
 
 	@Inject
-	public AbstractServlet(AppSettingDao appSettingDao) {
+	public AbstractServlet() {
 		super();
 		if (this.getClass().isAnnotationPresent(ServletPath.class)){
 			ServletPath ann = this.getClass().getAnnotation(ServletPath.class);
 			this.servletBasePath = ann.value();
 		}
-
-		this.appSettingDao = appSettingDao;
+		
+		config = ConfigFactory.getConfig(AppConfig.class);
+		
 		this.jsonResult = new JSONObject(); 
 		context = new VelocityContext();
 	}
 
 	public void rereadSettings(){
 		log.info("reread settings ...");
-		currentTheme = "/themes/"+appSettingDao.getSettingValue(AppSetting.APP_THEME);
+		currentTheme = "/themes/"+config.getTheme();
 		context.put("theme", currentTheme);
-		context.put("pageTitle", appSettingDao.getSettingValue(AppSetting.APP_TITLE));
-		context.put("appTitle", appSettingDao.getSettingValue(AppSetting.APP_TITLE));
-		context.put("appVersion", appSettingDao.getSettingValue(AppSetting.APP_VERSION));
-		context.put("footer1", appSettingDao.getSettingValue(AppSetting.APP_FOOTER1));
-		context.put("footer2", appSettingDao.getSettingValue(AppSetting.APP_FOOTER2));
-		context.put("storeAddressLine1", appSettingDao.getSettingValue(AppSetting.STORE_ADDRESS_LINE1));
-		context.put("storeAddressLine2", appSettingDao.getSettingValue(AppSetting.STORE_ADDRESS_LINE2));		
-		context.put("storeTelephone", appSettingDao.getSettingValue(AppSetting.STORE_TELEPHONE));
-		context.put("storeFax", appSettingDao.getSettingValue(AppSetting.STORE_FAX));		
-		context.put("storeWebsite", appSettingDao.getSettingValue(AppSetting.STORE_WEBSITE));
-		context.put("storeEmail", appSettingDao.getSettingValue(AppSetting.STORE_EMAIL));
-		context.put("storeName", appSettingDao.getSettingValue(AppSetting.STORE_NAME));
-		context.put("storeOpeningTime", appSettingDao.getSettingValue(AppSetting.STORE_OPENING_TIME));
+		context.put("footer1", config.getFooterLine1());
+		context.put("footer2", config.getFooterLine2());
+		context.put("shopStatus", config.getShopStatus());
+		context.put("shopOpeningTime", config.getOpeningTime());
+
+		context.put("StringUtils", new StringUtils());
 		context.put("Formatter", Formatter.INSTANCE);
-		Formatter.LOCALE = appSettingDao.getSettingValue(AppSetting.STORE_LOCALE);
-
-		context.put("refreshInterval", appSettingDao.getSettingValue(AppSetting.REFRESH_INTERVAL));
-//		context.put("currentTime", appSettingDao.now());
-		context.put("date", new DateTool());
-
-		context.put("logo", appSettingDao.getSettingValue(AppSetting.APP_LOGO));
-		context.put("pageMeta", appSettingDao.getSettingValue(AppSetting.APP_PAGE_META));
-		context.put("topnav", NavigationItem.createList(appSettingDao.getSettingValue(AppSetting.APP_TOPNAV)));
-		context.put("sidebar", appSettingDao.getSettingValue(AppSetting.APP_SIDEBAR));
-		context.put("sidebarLinkList", NavigationItem.createList(appSettingDao.getSettingValue(AppSetting.APP_SIDEBAR_LINKLIST)));
-		context.put("defaultProductThumbnail",  appSettingDao.getSettingValue(AppSetting.PRODUCT_DEFAULT_THUMBNAIL));
-		context.put("defaultProductImage",  appSettingDao.getSettingValue(AppSetting.PRODUCT_DEFAULT_IMAGE));
-
-		//HARDCODED
-		String storeMode = appSettingDao.getSettingValue(AppSetting.STORE_MODE);
-		context.put("storeMode", storeMode);
-		Integer iStoreMode = 3;
-		try{
-			iStoreMode = Integer.parseInt(storeMode);
-			if ((iStoreMode<0) || (iStoreMode>3))
-				iStoreMode = 3;
-		}catch (NumberFormatException e){
-		}
+		Formatter.LOCALE = config.getLocale();
 		
-		context.put("storeModeTitle", appSettingDao.getSettingValue("store.mode.title"+iStoreMode));
-		context.put("storeModeDescription", appSettingDao.getSettingValue("store.mode.description"+iStoreMode));	
+		context.put("logo", config.getLogo());
+		context.put("pageMeta", config.getCommonPageMeta());
+		context.put("topnav", NavigationItem.createList(config.getTopNav()));
+		context.put("sidebarLinkList", NavigationItem.createList(config.getSidebarLinkList()));
+		context.put("defaultProductThumbnail",  config.getDefaultProductThumbnail());
+		context.put("defaultProductImage",  config.getDefaultProductImage());
+		
+		context.put("shopStreet", config.getShopStreet());
+		context.put("shopHouseNumber", config.getShopHouseNumber());
+		context.put("shopZipcode", config.getShopZipcode());
+		context.put("shopCity", config.getShopCity());
+		context.put("shopState", config.getShopState());
+		context.put("shopCountry", config.getShopCountry());
+		context.put("shopFax", config.getShopFax());
+		context.put("shopTelephone", config.getShopTelephone());
+		context.put("shopEmail", config.getShopEmail());
+
+		context.put("facebookImage", config.getFacebookImage());
+		context.put("favIcon", config.getFavIcon());
+		context.put("geoPosition", config.getGeoPosition());
+		context.put("geoRegion", config.getGeoRegion());
+		context.put("publisher", config.getPublisher());
+		context.put("shopName", config.getShopName());
+		context.put("siteUrl", config.getSiteUrl());
+		context.put("googleAnalytics", config.getGoogleAnalytics());
+
 	}
 	
 	protected abstract void processJsonRequest(HttpServletRequest request,
@@ -138,7 +135,7 @@ public abstract class AbstractServlet extends HttpServlet {
 			log.info("doPost ...");
 			processRequest(request, response);
 		} catch (EntityNotFoundException e) {
-			log.severe("Error when doPost. Errmsg = "+e.getMessage());
+			log.warning("Error when doPost. Errmsg = "+e.getMessage());
 			renderJson(response, ApplicationError.ENTITY_NOT_FOUND);
 		} catch (InvalidParameterException e) {
 			log.severe("Error when doPost. Errmsg = "+e.getMessage());
@@ -233,7 +230,7 @@ public abstract class AbstractServlet extends HttpServlet {
 	}
 
 	protected void onProcessFileUploadError(int errno, String errmsg) {		
-		log.info(errmsg);
+		log.warning(errmsg);
 	}
 
 	@SuppressWarnings("unchecked")

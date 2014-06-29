@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 
 import de.anhquan.viem.core.ApplicationError;
-import de.anhquan.viem.core.dao.AppSettingDao;
 import de.anhquan.viem.core.dao.NameBasedDao;
 import de.anhquan.viem.core.json.JSONImporter;
 import de.anhquan.viem.core.json.ParseJSONException;
@@ -33,8 +32,7 @@ public abstract class BaseEntityAdminServlet<Entity extends NameBasedEntity> ext
 	public static final Logger log = Logger.getLogger(BaseEntityAdminServlet.class
 			.getName());
 	
-	public BaseEntityAdminServlet(AppSettingDao appSettingDao, NameBasedDao<Entity> entityDao, JSONImporter<Entity> jsonImporter) {
-		super(appSettingDao);
+	public BaseEntityAdminServlet(NameBasedDao<Entity> entityDao, JSONImporter<Entity> jsonImporter) {
 		this.jsonImporter = jsonImporter;
 		this.entityDao = entityDao;
 		this.entityClassName = entityDao.getEntityClassName();
@@ -81,7 +79,6 @@ public abstract class BaseEntityAdminServlet<Entity extends NameBasedEntity> ext
 			case TOGGLE_VISIBILITY:
 					doToggleVisibility(entity, request, response);
 					break;
-					
 			default:
 					processExtraJsonRequest(action, entity, request,response);				
 		}
@@ -117,10 +114,18 @@ public abstract class BaseEntityAdminServlet<Entity extends NameBasedEntity> ext
 			case CREATE:
 				doCreateEntity(request, response);
 				break;
+			
+			case INIT:
+				doInitEntity(request, response);
 				
 			default:
 				doViewList(request, response);
 		}
+	}
+
+	protected void doInitEntity(HttpServletRequest request,
+			HttpServletResponse response) {
+		
 	}
 
 	@SuppressWarnings("unchecked")
@@ -165,7 +170,8 @@ public abstract class BaseEntityAdminServlet<Entity extends NameBasedEntity> ext
 
 	protected void doSort(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String sortedList = StringUtils.trimToEmpty(request.getParameter("sortedId"));
+		String sortedList = StringUtils.trimToEmpty(request.getParameter("sortedIds"));
+		log.info("Sort entities ... id="+sortedList);
 		entityDao.sort(sortedList);
 		renderJson(response, ApplicationError.OK);
 	}
@@ -177,6 +183,7 @@ public abstract class BaseEntityAdminServlet<Entity extends NameBasedEntity> ext
 		renderJson(response, ApplicationError.OK);
 	}
 
+	@SuppressWarnings("unchecked")
 	protected void doToggleVisibility(Entity entity, HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException, SecurityException {		
 		log.info("doToggleVisibility ...");
@@ -285,7 +292,7 @@ public abstract class BaseEntityAdminServlet<Entity extends NameBasedEntity> ext
 		try {
 			List<Entity> entities = jsonImporter.parse(uploadedContent);
 			for(Entity p : entities){
-				entityDao.put(p);
+				entityDao.put(p);				
 			}
 
 		} catch (ParseJSONException e) {

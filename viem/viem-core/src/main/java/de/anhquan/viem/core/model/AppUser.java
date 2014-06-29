@@ -2,13 +2,9 @@ package de.anhquan.viem.core.model;
 
 import java.util.Date;
 
-import org.json.simple.JSONObject;
-
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Index;
-
-import de.anhquan.viem.core.util.Parser;
 
 @Entity
 @Cache
@@ -24,9 +20,10 @@ public class AppUser extends NameBasedEntity{
 	
 	private Date firstLogin;
 	
-	private String nickName;
+	private String nickname;
 	
-	private String userId;
+	@Index
+	private String email;
 	
 	@Index
 	private String facebookUserName;
@@ -71,52 +68,20 @@ public class AppUser extends NameBasedEntity{
 		this.firstName = firstName;
 	}
 
-	public String getNickName() {
-		return nickName;
+	public String getNickname() {
+		return nickname;
 	}
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
+	public void setNickname(String nickName) {
+		this.nickname = nickName;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-		
-	@Override
-	public void fromJSON(JSONObject json) {
-		if (json == null)
-			return;
-		this.name = Parser.parseString( json.get("email"));
-		this.firstName = Parser.parseString( json.get("firstName"));
-		this.lastName = Parser.parseString( json.get("lastName"));
-		this.firstLogin = Parser.parseDate( json.get("firstLogin"));
-		this.lastLogin = Parser.parseDate( json.get("lastLogin"));
-		this.facebookUserName = Parser.parseString( json.get("facebookUserName"));
-		this.nickName = Parser.parseString( json.get("nickName"));
-		this.userId = Parser.parseString( json.get("userId"));
-
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public JSONObject toJSONObject(){
-		JSONObject json = new JSONObject();
-		json.put("email", this.name);
-		json.put("firstName", this.firstName);
-		json.put("lastName", this.lastName);
-		json.put("firstLogin", this.firstLogin);
-		json.put("lastLogin", this.lastLogin);
-		json.put("facebookUserName", this.facebookUserName);
-		json.put("nickName", this.nickName);
-		json.put("userId", this.userId);
-
-		return json;
-		
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

@@ -13,6 +13,20 @@ public abstract class NameBasedDao<T extends NameBasedEntity> extends BaseDao<T>
         super(clazz);
     }
 	
+	@Override
+	public T put(T object) {
+		if (object==null)
+			return null;
+		
+		
+		T found = findFirstItemWithName(object.getName());
+		if (found!=null){
+			found.copyFrom(object);
+			return super.put(found);
+		}
+		else
+			return super.put(object);
+	}
 	/**
 	 * Sort items
 	 * @param sortedIds Comma-separated list of entity ID
@@ -32,7 +46,7 @@ public abstract class NameBasedDao<T extends NameBasedEntity> extends BaseDao<T>
 					put(entity);
 				}
 			}catch (NumberFormatException e) {
-				log.info("Cannot parse ID from String");
+				log.warning("Cannot parse ID from String");
 			}
 		}
 	}

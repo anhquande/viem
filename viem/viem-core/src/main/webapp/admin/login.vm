@@ -1,8 +1,8 @@
 #parse("/admin/header.vm")	
  	
     <div class="container">
-
-      <form class="form-signin" role="form" action="/login2admin" method="POST">
+	<div class="col-md-3">
+      <form class="form-signin" role="form" action="/login_admin" method="POST">
         <h2 class="form-signin-heading">Please sign in</h2>
         <input type="hidden" name="action" value="login">
         <input type="email" class="form-control" placeholder="Email address" name="email" required autofocus>
@@ -10,9 +10,17 @@
         <label class="checkbox">
           <input type="checkbox" value="remember-me"> Remember me
         </label>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+		<div class="col-md-6">
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+		</div>
+		<div class="col-md-6">
+			
+		</div>
       </form>
-
+	  <div class="col-md-12">
+			<a href="$loginURL">or login with Google Account</a>
+		</div>		
+	</div>
     </div> <!-- /container -->
 	
 	#parse("/admin/footer.vm")

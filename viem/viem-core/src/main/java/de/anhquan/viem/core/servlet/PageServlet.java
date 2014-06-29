@@ -13,8 +13,6 @@ import org.apache.commons.lang.StringUtils;
 import com.google.inject.Inject;
 
 import de.anhquan.viem.core.annotation.ServletPath;
-import de.anhquan.viem.core.dao.AppSettingDao;
-import de.anhquan.viem.core.servlet.AbstractServlet;
 import de.anhquan.viem.core.dao.PageDao;
 import de.anhquan.viem.core.model.Page;
 
@@ -29,8 +27,7 @@ public class PageServlet extends AbstractServlet {
 	private static final long serialVersionUID = -6630427559567895991L;
 	
 	@Inject
-	public PageServlet(AppSettingDao appSettingDao, PageDao pageDao) {
-		super(appSettingDao);
+	public PageServlet(PageDao pageDao) {
 		this.pageDao = pageDao;
 	}
 
@@ -59,6 +56,8 @@ public class PageServlet extends AbstractServlet {
 		}
 		
 		context.put("page", page);
+		
+		context.put("url", config.getSiteUrl()+"/"+page.getName()+".html");
 		
 		String template = "default";
 		if (!StringUtils.isEmpty(page.getTemplate())){

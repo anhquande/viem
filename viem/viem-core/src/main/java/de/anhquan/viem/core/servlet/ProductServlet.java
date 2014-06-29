@@ -15,7 +15,6 @@ import com.google.inject.Inject;
 
 import de.anhquan.viem.core.Constants;
 import de.anhquan.viem.core.annotation.ServletPath;
-import de.anhquan.viem.core.dao.AppSettingDao;
 import de.anhquan.viem.core.dao.CategoryDao;
 import de.anhquan.viem.core.dao.DefaultProductDao;
 import de.anhquan.viem.core.dao.OptionDao;
@@ -43,15 +42,14 @@ public class ProductServlet extends AbstractServlet {
 	final OptionItemDao optionItemDao;
 	
 	@Inject
-	public ProductServlet(AppSettingDao appSettingDao,
-			ProductDao productDao,
+	public ProductServlet(
+			final ProductDao productDao,
 			final CategoryDao categoryDao, 
 			final ProductCategoryRelationDao pcRelDao,
 			final DefaultProductDao defaultProductDao,
 			final OptionDao optionDao,
 			final OptionTypeDao optionTypeDao,
 			final OptionItemDao optionItemDao) {
-		super(appSettingDao);
 		this.productDao = productDao;
 		this.categoryDao = categoryDao;
 		this.pcRelDao = pcRelDao;
@@ -113,7 +111,7 @@ public class ProductServlet extends AbstractServlet {
 		page.setDescription(product.getShortDescription());
 		page.setName(getServletBasePath().replaceFirst("\\*", product.getName()));
 		context.put("page", page);
-		
+		context.put("url", config.getSiteUrl()+page.getName());
 		context.put("currentCategoryId", request.getSession().getAttribute(Constants.SESSION_CURRENT_CATEGORY));
 		
 		renderHtml(response, currentTheme+"/pages/product."+template+".vm");

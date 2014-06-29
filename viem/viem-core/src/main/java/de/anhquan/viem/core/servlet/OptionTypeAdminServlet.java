@@ -5,7 +5,6 @@ import java.util.logging.Logger;
 import com.google.inject.Inject;
 
 import de.anhquan.viem.core.annotation.ServletPath;
-import de.anhquan.viem.core.dao.AppSettingDao;
 import de.anhquan.viem.core.dao.OptionTypeDao;
 import de.anhquan.viem.core.json.OptionTypeImporter;
 import de.anhquan.viem.core.model.OptionType;
@@ -18,10 +17,10 @@ public class OptionTypeAdminServlet extends BaseEntityAdminServlet<OptionType> {
 	public static final Logger log = Logger.getLogger(OptionTypeAdminServlet.class.getName());
 	
 	@Inject
-	public OptionTypeAdminServlet(AppSettingDao appSettingDao, 
+	public OptionTypeAdminServlet( 
 			OptionTypeDao dao,
 			OptionTypeImporter jsonImporter) {
-		super(appSettingDao, dao, jsonImporter);
+		super(dao, jsonImporter);
 	}
 
 }

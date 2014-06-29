@@ -138,7 +138,33 @@ jQuery(function($) {
 		            	location.reload();
 		            }
 		        });
-			}		 
+			}		
+			else if ($bt.attr('name') == 'btRestoreKey'){
+	    		$('input[name=action]',$form).val('restoreKey');
+		        $.ajax({
+		        	dataType: "json",
+		            type: $form.attr('method'),
+		            url: $form.attr('action'),
+		            data: $form.serialize(),
+		            success: function(jsonObj, status) {
+		            	$('span[name=loading-indicator]',$form).hide();
+		            	$('span[name=loading-msg]',$form).html("<i class='fa fa-check'></i> Updated successfully!").addClass("alert-success");
+		            }
+		        });
+			}	
+			else if ($bt.attr('name') == 'btSetKey'){
+	    		$('input[name=action]',$form).val('setKey');
+		        $.ajax({
+		        	dataType: "json",
+		            type: $form.attr('method'),
+		            url: $form.attr('action'),
+		            data: $form.serialize(),
+		            success: function(jsonObj, status) {
+		            	$('span[name=loading-indicator]',$form).hide();
+		            	$('span[name=loading-msg]',$form).html("<i class='fa fa-check'></i> Updated successfully!").addClass("alert-success");
+		            }
+		        });
+			}				
 
 	        event.preventDefault();
 	    });

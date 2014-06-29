@@ -1,29 +1,27 @@
-<footer id="bottom">
+<footer id="bottom" >
   <div class="container">
     <div class="row">
       <div class="col-md-3 openingtime">
         <h4 style="color:#CA0000"><i class="fa fa-home"></i> Adresse</h4>									
-        <p><strong>$storeName</strong></p>
-        <p>$storeAddressLine1</p>
-        <p>$storeAddressLine2</p>         
+        <p><strong>$shopName</strong></p>
+        <p>$!shopStreet $!shopHouseNumber</p>
+        <p>$!shopZipcode $!shopCity</p>         
       </div> 
       <div class="col-md-3 openingtime">
           <h4 style="color:#CA0000"><i class="fa fa-envelope"></i> Kontakt</h4>
-          <p><i class="fa fa-phone"></i> $storeTelephone</p>
-          <p><i class="fa fa-print"></i> $storeFax</p>
-          <p><i class="fa fa-anchor"></i> $storeWebsite</p>
+          <p><i class="fa fa-phone"></i> $shopTelephone</p>
+          <p><i class="fa fa-print"></i> $shopFax</p>
+          <p><i class="fa fa-anchor"></i> $siteUrl</p>
           
       </div>
       <div class="col-md-3 openingtime">
           <h4 style="color:#CA0000"><i class="fa fa-clock-o"></i> Öffnungszeiten</h4>
-          $storeOpeningTime
+          $shopOpeningTime
       </div>
     </div>
     <hr>
-    <div class="container">
-      <p>$footer1</p>
-      <p>$footer2</p>
-    </div>
+	<p>$footer1</p>
+	<p>$footer2</p>
   </div>
 
 </footer>
@@ -40,3 +38,5 @@
 
 <!-- Custom JavaScript -->
 <script src="$theme/js/script.js"></script>	
+
+$googleAnalytics

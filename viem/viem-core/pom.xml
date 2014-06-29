@@ -18,10 +18,10 @@
 	</pluginRepositories>
 
 	<properties>
-		<!-- Some AppID: lieferungsstatus daiduongservice bestellungcheck bienhoadev -->
-		<appengine.app.id>daiduongservice</appengine.app.id>
-		<appengine.app.version>1</appengine.app.version>
-		<appengine.target.version>1.9.2</appengine.target.version>
+		<!-- Some AppID: lieferungsstatus daiduongservice bestellungcheck bienhoadev daiduongaachen thaiexpressinelversberg -->
+		<appengine.app.id>thaiexpresselversberg</appengine.app.id>
+		<appengine.app.version>2</appengine.app.version>
+		<appengine.target.version>1.9.5</appengine.target.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -107,6 +107,19 @@
 		</dependency>
 
 		<!-- MISC -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>17.0</version>
+		</dependency>
+				
+		<dependency>
+            <groupId>commons-configuration</groupId>
+            <artifactId>commons-configuration</artifactId>
+            <version>1.10</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>

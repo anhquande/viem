@@ -1,9 +1,21 @@
-<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta http-equiv="expires" content="0">
 
-<meta name="description" content="$page.description">
-<title>$storeName - $page.title</title>
-$pageMeta    
+<link rel="canonical" href="$url" />   
+<link rel="icon" type="image/ico" href="$favIcon">
+<meta name="geo.placename" content="$!shopStreet $!shopHouseNumber, $!shopZipcode $!shopCity, $!shopState $!shopCountry" />
+<meta name="geo.position" content="$!geoPosition" />
+<meta name="geo.region" content="$!geoRegion" />
+<meta name="ICBM" content="$!geoPosition" />
+<link rel="publisher" href="$!publisher">
+<meta property="og:site_name" content="$!shopName" />
+<meta property="og:image" content="$!facebookImage" />
+
+	  
+<meta name="description" content="$!page.description">
+<title>$!shopName - $!page.title</title>
+$!pageMeta    
    
 <!-- Bootstrap core CSS -->
 <link href="/base/css/bootstrap.css" rel="stylesheet">

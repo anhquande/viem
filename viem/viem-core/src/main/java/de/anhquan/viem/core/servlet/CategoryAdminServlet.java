@@ -14,7 +14,6 @@ import com.google.inject.Inject;
 
 import de.anhquan.viem.core.ApplicationError;
 import de.anhquan.viem.core.annotation.ServletPath;
-import de.anhquan.viem.core.dao.AppSettingDao;
 import de.anhquan.viem.core.dao.CategoryDao;
 import de.anhquan.viem.core.dao.ProductCategoryRelationDao;
 import de.anhquan.viem.core.dao.ProductDao;
@@ -37,12 +36,12 @@ public class CategoryAdminServlet extends BaseEntityAdminServlet<Category> {
 	ProductCategoryRelationDao pcRelDao;
 	
 	@Inject
-	public CategoryAdminServlet(AppSettingDao appSettingDao, 
+	public CategoryAdminServlet(
 			CategoryDao productCategoryDao, 
 			ProductDao productDao, 
 			ProductCategoryRelationDao pcRelDao, 
 			CategoryImporter jsonImporter) {
-		super(appSettingDao, productCategoryDao, jsonImporter);
+		super(productCategoryDao, jsonImporter);
 		this.productDao = productDao;
 		this.pcRelDao = pcRelDao;
 	}

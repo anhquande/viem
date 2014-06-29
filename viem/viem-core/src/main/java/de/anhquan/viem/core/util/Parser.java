@@ -83,6 +83,23 @@ public class Parser {
 
 		return null; 
 	}
+
+	public static Double parseDouble(String obj) {
+		if (obj == null)
+			return new Double(0);
+		
+		if (obj instanceof String){
+			String s = StringUtils.trimToEmpty((String)obj);
+			Double p = new Double(0);
+			try{
+				p = Double.parseDouble(s);
+			}
+			catch (Exception e){}
+			return p;
+		}
+		
+		return new Double(0);
+	}
 	
 	
 }

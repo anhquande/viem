@@ -29,9 +29,20 @@ public enum Action {
 	UPDATE_OPTION_ITEM("updateOptionItem",true),
 	DELETE_OPTION_ITEM("deleteOptionItem",true),
 	SORT_OPTION_ITEM("sortOptionItem"),
+	
+	// Command for Settings
+	SET_KEY ("setKey", true),
+	GET_KEY ("getKey", true),
+	RESTORE_KEY ("restoreKey", true),
+	RESET_ALL_KEYS ("resetAllKeys"),
 
 	//Command for category
-	SAVE_SELECTED_PRODUCTS ("saveSelectedProducts", true);
+	SAVE_SELECTED_PRODUCTS ("saveSelectedProducts", true),
+	
+	//INIT
+	INIT("init"),
+	RESET("reset"), 
+	RESET_ALL("resetAll");
 	
 	private String value;
 	private boolean requireId;

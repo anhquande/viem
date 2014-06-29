@@ -1,0 +1,84 @@
+
+	#parse("/admin/header.vm")	
+
+	<div class="container">    
+			<div class="page-header">
+				<form toolbar-async action="${basePath}" method="post" class="pull-right">
+					<input type="hidden" name="action" value="">   
+						<span class="tooltip-container">
+							<span name="toolbar-loading-indicator" class="loading-indicator" style="display:none"></span><span name="toolbar-loading-msg"></span>
+						
+							<button class="btn btn-default" type="submit" name="btClearAll" data-toggle="tooltip" data-placement="top" title="" data-original-title="Reset all"><i class="fa fa-trash-o"></i> </button>
+							<a href="${basePath}?action=export2json" class="btn btn-default" name="btExport" data-toggle="tooltip" data-placement="top" title="" data-original-title="Export database to json"><i class="fa fa-save"></i> </a>
+							<button class="btn btn-default" type="submit" name="btImport" data-toggle="tooltip" data-placement="top" title="" data-original-title="Import from JSON file to database."><i class="fa fa-upload"></i> </button>
+						</span>
+				 </form>		
+				 <h4>$className Manager <small>
+				 </small></h4>
+			</div>
+			
+			<div id="uploadForm" class="well well-sm" >
+				<form fileupload-async action="${basePath}" method="post" enctype="multipart/form-data">
+					<div class="input-append">
+						<input id="importedFileName" class="input-large" type="text">
+						<a class="btn" onclick="$('input[name=importedFile]').click();">Browse</a>
+						<input class="btn" type="submit" value="Start Import">
+					</div>
+					
+			        <input style="display:none" type="file" name="importedFile">			        
+			    </form>
+			    
+			    <div class="progress">
+			        <div class="bar"></div >
+			        <div class="percent">0%</div >
+			    </div>
+			    
+			    <div id="status"></div>
+			</div>
+		   	<ul class="list-group" id="sortable">#foreach($entity in $entities)
+				<li class="list-group-item" id="$entity.id">
+				<div class="row">
+				   	<form class="form-horizontal" data-async action="${basePath}" method="post">
+						<input type="hidden" name="id" value="$entity.id">
+						<input type="hidden" name="key" value="$entity.getName()">
+						<input type="hidden" name="valueType" value="$entity.getValueType()">
+						<input type="hidden" name="action" value="">
+						  <div class="col-lg-12">
+							<div class="row">
+								<div class="input-group">
+									<label class="form-control alert-success ">
+										$velocityCount. $entity.getTitle() 
+										<small>(key=$entity.getName())</small> 
+										<span class='pull-right'> 
+											<span class="loading-indicator" name="loading-indicator" style="display:none"></span>
+											<span name="loading-msg"></span>
+										</span>
+									</label>
+									<span class="input-group-btn tooltip-container">
+										<button class="btn btn-default" type="submit" name="btRestoreKey" data-toggle="tooltip" data-placement="top" title="" data-original-title="Restore key to default value"><i class='fa fa-refresh'></i></button>
+										<button class="btn btn-default" type="submit" name="btSetKey" data-toggle="tooltip" data-placement="top" title="" data-original-title="Save key"><i class='fa fa-save'></i></button> 
+									</span>
+								</div><!-- /input-group -->
+							 
+								#if ($entity.getValueType() == "java.lang.Boolean")
+									<input type="checkbox" name="value" #if ($entity.getValue()) checked #end>  $entity.getDescription() 
+								#elseif ($entity.getValueType() == "java.lang.Integer")								
+									<input id="quantity" name="value" value="$entity.getValue()" spinner>
+								#else
+									<textarea name="value" class="form-control" rows="2" cols="80" >$entity.getValue()</textarea>
+								#end								
+							</div><!-- /row -->
+						  </div><!-- /.col-lg-12 -->		
+				   	</form>
+				</div>
+				</li>
+		        #end
+			</ul>
+	</div>
+	#parse("/admin/footer.vm")
+	
+	<script src="/admin/js/admin.entity.list.js"></script>
+	
+</body>
+
+</html>
