@@ -11,8 +11,6 @@
 <link rel="publisher" href="$!publisher">
 <meta property="og:site_name" content="$!shopName" />
 <meta property="og:image" content="$!facebookImage" />
-
-	  
 <meta name="description" content="$!page.description">
 <title>$!shopName - $!page.title</title>
 $!pageMeta    
