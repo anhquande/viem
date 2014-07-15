@@ -1,1 +1,1 @@
-mvn clean compile appengine:update -DskipTests=true
+mvn compile appengine:update -DskipTests=true

@@ -45,8 +45,11 @@ public class ConfigAdminServlet extends BaseEntityAdminServlet<ConfigEntity> {
 	@Override
 	protected void doClearAll(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		log.info("Clear all configs and reset to default values");
-		config.resetAll();
+		String confirm = request.getParameter("confirm");
+		if ((confirm != null)  && (confirm.compareToIgnoreCase("yes")==0)){
+			log.info("Clear all configs and reset to default values");
+			config.resetAll();
+		}		
 		renderJson(response, ApplicationError.OK);		
 	}
 	@Override
