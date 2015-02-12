@@ -9,13 +9,7 @@
 	<artifactId>viem-core</artifactId>
 	<packaging>war</packaging>
 
-	<pluginRepositories>
-		<pluginRepository>
-			<id>google-staging</id>
-			<name>Google Staging</name>
-			<url>https://oss.sonatype.org/content/repositories/comgoogleappengine-1004/</url>
-		</pluginRepository>
-	</pluginRepositories>
+
 
 	<properties>
 		<!-- Some AppID: lieferungsstatus daiduongservice bestellungcheck bienhoadev daiduongaachen thaiexpressinelversberg -->
