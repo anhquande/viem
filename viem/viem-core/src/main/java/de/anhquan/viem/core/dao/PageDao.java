@@ -18,6 +18,15 @@ public class PageDao extends NameBasedDao<Page>{
 		super(Page.class);
 	}
 
+	/**
+	 * Add a page
+	 * Example: addPage("impressum","default","Impressum","Impressum","Add your impressum here");
+	 * @param path
+	 * @param template
+	 * @param title
+	 * @param description
+	 * @param content
+	 */
 	public void addPage(String path, String template, String title, String description, String content){
 		Page p = give(path);
 		
@@ -28,11 +37,4 @@ public class PageDao extends NameBasedDao<Page>{
 		put(p);
 	}
 	
-	public void createDefaultPages(){
-		
-//		addPage("partyservice","default", "Partyservice","Partyservice", "<p>Gerne kochen wir auch für Ihre Feierlichkeiten zu günstigen Preisen. Lassen Sie sich von uns beraten und ein auf Ihre Bedürfnisse passendes Angebot machen.</p>");
-//		addPage("kontakt","default", "Kontakt","Kontakt", "<h3>Wir freuen uns von Ihnen zu hören!</h3><p>Wir freuen uns über alle Rückmeldungen. Falls Sie ein Problem mit einer Bestellung haben, geben Sie uns bitte so viele Details wie möglich an, damit wir diese Probleme beheben können.</p>");
-//		addPage("impressum","default","Impressum","Impressum","Add your impressum here");
-//		addPage("index","default","Über uns","Über uns","Liebe Gäste,herzlich willkommen bei Thai Express in Elversberg");
-	}
 }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    #parse("$theme/pages/common-header.vm")    
+</head>
+
+<body>
+	#parse("$theme/pages/header.vm")
+	
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-3">
+				#parse ("$theme/pages/sidebar.vm")
+            </div>
+
+            <div class="col-md-9">
+            	$page.content
+                
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.container -->
+
+   #parse("$theme/pages/footer.vm")
+   
+    <!-- JavaScript -->
+    <script src="$theme/js/jquery-1.10.2.js"></script>
+    <script src="$theme/js/bootstrap.min.js"></script>
+    <script src="$theme/lightbox/ekko-lightbox.js"></script>
+    
+    <script src="$theme/js/script.js"></script>
+    
+
+</body>
+
+</html>

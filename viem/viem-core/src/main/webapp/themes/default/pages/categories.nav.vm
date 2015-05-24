@@ -1,0 +1,11 @@
+<div class="list-group">
+    #foreach($item in $categories)
+        	<a href="/category/$item.name" class="list-group-item 
+			#if ($currentCategoryId)
+				#if ($item.id == $currentCategoryId)
+					active
+				#end
+			#end
+			">$item.title</a>        	
+    #end
+</div>

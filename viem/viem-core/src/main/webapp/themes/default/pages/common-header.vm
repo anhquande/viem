@@ -1,0 +1,27 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta http-equiv="expires" content="0">
+
+<link rel="canonical" href="$url" />   
+<link rel="icon" type="image/ico" href="$favIcon">
+<meta name="geo.placename" content="$!shopStreet $!shopHouseNumber, $!shopZipcode $!shopCity, $!shopState $!shopCountry" />
+<meta name="geo.position" content="$!geoPosition" />
+<meta name="geo.region" content="$!geoRegion" />
+<meta name="ICBM" content="$!geoPosition" />
+<link rel="publisher" href="$!publisher">
+<meta property="og:site_name" content="$!shopName" />
+<meta property="og:image" content="$!facebookImage" />
+<meta name="description" content="$!page.description">
+<title>$!shopName - $!page.title</title>
+$!pageMeta    
+   
+<!-- Bootstrap core CSS -->
+<link href="/base/css/bootstrap.css" rel="stylesheet">
+<link href="/base/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+<link href="/base/plugins/jquery-ui/jquery-ui-1.10.4.min.css" rel="stylesheet">
+<link href="/base/plugins/radios-to-slider/radios-to-slider.min.css" rel="stylesheet">
+<link href="/base/plugins/lightbox/ekko-lightbox.min.css" rel="stylesheet">
+<link href="/base/plugins/jquery-ui/jquery-ui-1.10.4.min.css" rel="stylesheet">
+<!-- Add custom CSS here -->
+<link href="$theme/css/style.css" rel="stylesheet">

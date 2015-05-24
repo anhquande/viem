@@ -14,8 +14,8 @@
 	<properties>
 		<!-- Some AppID: lieferungsstatus daiduongservice bestellungcheck bienhoadev daiduongaachen thaiexpressinelversberg -->
 		<appengine.app.id>thaiexpresselversberg</appengine.app.id>
-		<appengine.app.version>2</appengine.app.version>
-		<appengine.target.version>1.9.5</appengine.target.version>
+		<appengine.app.version>3</appengine.app.version>
+		<appengine.target.version>1.9.17</appengine.target.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -190,7 +190,7 @@
 				<!-- below specify oauth2 to be false, as it's true by default Set to 
 					false to avoid the error: 404 Not Found This application does not exist (app_id=u'appname') -->
 				<configuration>
-					<oauth2>false</oauth2>
+					<oauth2>true</oauth2>
 				</configuration>
 			</plugin>
 		</plugins>

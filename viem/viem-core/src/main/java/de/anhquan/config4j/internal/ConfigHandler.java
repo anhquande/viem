@@ -109,8 +109,8 @@ public class ConfigHandler implements InvocationHandler {
 					Method getter;
 					try {
 						getter = ConfigurationProvider.class.getMethod(
-								configMethodName, String.class);
-						Object value = getter.invoke(configuration, propName);
+								configMethodName, String.class,returnType);
+						Object value = getter.invoke(configuration, propName, findDefaultValue(method, returnType));
 						ConfigItem item = new ConfigItem();
 						item.setKey(propName);
 						item.setTitle(annotation.Title());
@@ -309,9 +309,9 @@ public class ConfigHandler implements InvocationHandler {
 				return getDeclaredConfigItems();
 			} else {
 				getter = ConfigurationProvider.class.getMethod(
-						configMethodName, String.class); // String.class is for
+						configMethodName, String.class, clsReturnType); // String.class is for
 															// propName
-				return getter.invoke(configuration, propName);
+				return getter.invoke(configuration, propName, findDefaultValue(method, clsReturnType));
 			}
 		} catch (SecurityException e) {
 			e.printStackTrace();

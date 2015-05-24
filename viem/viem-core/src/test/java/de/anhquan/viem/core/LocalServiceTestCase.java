@@ -25,6 +25,7 @@ public abstract class LocalServiceTestCase extends AbstractModule{
 		injector = Guice.createInjector(this);		
 		config = ConfigFactory.getConfig(AppConfig.class);
 		
+		System.out.println("CONFIG THEME = "+config.getTheme());
 		configDao = injector.getInstance(ConfigDao.class);
 	}
 	

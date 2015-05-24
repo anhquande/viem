@@ -69,13 +69,14 @@ public abstract class AbstractServlet extends HttpServlet {
 		}
 		
 		config = ConfigFactory.getConfig(AppConfig.class);
-		
-		this.jsonResult = new JSONObject(); 
+		log.info("config:"+config.getTheme());
+		this.jsonResult = new JSONObject();
 		context = new VelocityContext();
 	}
 
 	public void rereadSettings(){
 		log.info("reread settings ...");
+		log.info("config:"+config.getTheme());
 		currentTheme = "/themes/"+config.getTheme();
 		context.put("theme", currentTheme);
 		context.put("footer1", config.getFooterLine1());

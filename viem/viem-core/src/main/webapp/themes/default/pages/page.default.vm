@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    #parse("$theme/pages/common-header.vm")
+    
+</head>
+
+<body>
+	#parse("$theme/pages/header.vm")
+	
+    <div class="container">
+
+        $page.content
+
+
+    </div>
+    <!-- /.container -->
+
+   #parse("$theme/pages/footer.vm")
+  
+
+</body>
+
+</html>

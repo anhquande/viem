@@ -1,0 +1,67 @@
+body {
+  padding-top: 140px;
+  background: url('../images/dust.png') top center repeat;
+  height: 100%;
+}
+
+.thumbnail img {
+  width: 100%;
+}
+
+.ratings {
+  color: #d17581;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.thumbnail {
+  padding: 0;
+}
+
+.thumbnail .caption-full {
+  padding: 9px;
+  color: #333;
+}
+
+footer {
+  margin: 50px 0;
+}
+
+.navbar-inverse {
+	background: url('../images/haunted-red.gif') top center repeat;
+	height: 140px;
+}
+
+#bottom{
+	padding: 15px 0;
+	padding-left: 20px;
+	padding-right: 20px;
+	font-size: 11px;
+	clear: both;
+	overflow: hidden;
+	width: 100%;
+	color: #303030;
+	background: url('../images/footer-bg-user-uploaded.jpg') 0 0;
+	margin: 0 0;
+	
+
+
+}
+
+.rating .br-widget {
+    height: 24px;
+}
+
+.rating .br-widget a {
+    background: url('../images/star.png');
+    width: 24px;
+    height: 24px;
+    display: block;
+    float: left;
+}
+
+.rating .br-widget a:hover,
+.rating .br-widget a.br-active,
+.rating .br-widget a.br-selected {
+    background-position: 0 24px;
+}

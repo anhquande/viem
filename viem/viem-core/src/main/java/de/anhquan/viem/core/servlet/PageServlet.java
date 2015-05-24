@@ -33,8 +33,7 @@ public class PageServlet extends AbstractServlet {
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
-		super.init(config);
-		pageDao.createDefaultPages();
+		super.init(config);		
 	}
 
 	@Override

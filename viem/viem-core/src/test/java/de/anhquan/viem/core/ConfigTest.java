@@ -30,15 +30,15 @@ public class ConfigTest extends LocalServiceTestCase{
 	@Test
 	public void testConfig(){
 
-//		List<String> keys = config.getKeys();
-//
-//		System.out.println("keys: "+keys);
-//		
-//		List<ConfigItem> items = config.getConfigItems();
-//
-//		for (ConfigItem configItem : items) {
-//			System.out.println(configItem.getKey()+ " = " +configItem.getValue() + ". TITLE = "+configItem.getTitle());
-//		}
+		List<String> keys = config.getKeys();
+
+		System.out.println("keys: "+keys);
+		
+		List<ConfigItem> items = config.getConfigItems();
+
+		for (ConfigItem configItem : items) {
+			System.out.println(configItem.getKey()+ " = " +configItem.getValue() + ". TITLE = "+configItem.getTitle());
+		}
 //		System.out.println(items);
 //		config.setOpenning(true);
 //		System.out.println("is store openning " + config.getOpenning());
