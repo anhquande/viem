@@ -18,6 +18,19 @@ public class Formatter {
 		return formatCurrency(cent,",");
 	}
 	
+	public static String formatVND(int cent){
+		return formatVND(cent,",");
+	}
+
+	public static String formatVND(long cent, String separator){
+		Locale currentLocale = Locale.forLanguageTag(LOCALE);
+		DecimalFormatSymbols symbols = new DecimalFormatSymbols(currentLocale);
+		String pattern = "###,###";
+		DecimalFormat myFormatter = new DecimalFormat(pattern, symbols);
+		String output = myFormatter.format(cent/100.0);
+		return output;
+	}
+	
 	public static String formatCurrency(long cent, String separator){
 		Locale currentLocale = Locale.forLanguageTag(LOCALE);
 		DecimalFormatSymbols symbols = new DecimalFormatSymbols(currentLocale);

@@ -9,15 +9,11 @@
 	
     <div class="container">
         <div class="row">
-			<!-- Sidebar -->
-            <div class="col-md-3">
-				#parse ("$theme/pages/categories.nav.vm")
-            </div>
 			
 			<!-- Main Container -->
             <div class="col-md-9">
 				<div class="col-md-12">
-					<strong>Artikel-Nr. ${product.getName()}</strong>
+					<strong>SKU: ${product.getName()}</strong>
 					<h4>$product.title</h4>
 				</div>
 				<div class="col-md-8">
@@ -83,7 +79,7 @@
 					
 					<div class="col-md-3">Einzelpreis</div>
 					<div class="col-md-9" id="endPriceDisplay">
-						${Formatter.formatCurrency($product.basePrice)} &euro;
+						${Formatter.formatVND($product.basePrice)} &euro;
 					</div>
 					
 					<div class="col-md-3">Quantity</div>

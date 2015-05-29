@@ -1,6 +1,7 @@
 package de.anhquan.viem.core.servlet;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletConfig;
@@ -13,13 +14,16 @@ import org.apache.commons.lang.StringUtils;
 import com.google.inject.Inject;
 
 import de.anhquan.viem.core.annotation.ServletPath;
+import de.anhquan.viem.core.dao.CategoryDao;
 import de.anhquan.viem.core.dao.PageDao;
+import de.anhquan.viem.core.model.Category;
 import de.anhquan.viem.core.model.Page;
 
 @ServletPath(value="*.html")
 public class PageServlet extends AbstractServlet {
 
 	private PageDao pageDao;
+	private CategoryDao categoryDao;
 	
 	public static final Logger log = Logger.getLogger(PageServlet.class
 			.getName());
@@ -27,8 +31,9 @@ public class PageServlet extends AbstractServlet {
 	private static final long serialVersionUID = -6630427559567895991L;
 	
 	@Inject
-	public PageServlet(PageDao pageDao) {
+	public PageServlet(CategoryDao categoryDao, PageDao pageDao) {
 		this.pageDao = pageDao;
+		this.categoryDao = categoryDao;
 	}
 
 	@Override
@@ -44,6 +49,12 @@ public class PageServlet extends AbstractServlet {
 	@Override
 	protected void processHtmlRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+	
+		List<Category> categories = categoryDao.getVisibleCategories();
+		context.put("categories", categories);
+
+		log.info("processHTMLrequest categories count =  "+categories.size());
+		
 		String pageName = StringUtils.trimToEmpty(request.getRequestURI());
 
 		pageName = pageName.substring(1, pageName.length() - ".html".length());

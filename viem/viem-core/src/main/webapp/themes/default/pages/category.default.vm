@@ -11,10 +11,9 @@
     <div class="container">
         <div class="row">
 			<!-- Sidebar -->
-            <div class="col-md-3">
+            <div class="col-md-2">
 				#parse ("$theme/pages/categories.nav.vm")
             </div>
-			
 			<!-- Main Container -->
             <div class="col-md-6">
             	<h3>$entity.title</h3> 
@@ -23,15 +22,15 @@
             	<ul class="media-list">
 				  <li class="media">
 				  #if (!$StringUtils.isEmpty($product.image1))
-				    <a class="pull-left" href="$product.image1" data-toggle="lightbox" data-type="image" data-title="$product.title (${Formatter.formatCurrency($product.basePrice)} €)" data-footer="$product.shortDescription">
+				    <a class="pull-left" href="$product.image1" data-toggle="lightbox" data-type="image" data-title="$product.title (${Formatter.formatVND($product.basePrice)} K)" data-footer="$product.shortDescription">
 				      #if (!$StringUtils.isEmpty($product.thumbnail))
 						<img class="media-object" src="$product.thumbnail" alt="111" class="img-responsive">
 					  #else
-						<img class="media-object" src="$product.image1" width="60px" height="45px" alt="222" class="img-responsive">
+						<img class="media-object" src="$product.image1" width="120px"  alt="222" class="img-responsive">
 					  #end
 				    </a>
 				  #else
-				    <a class="pull-left" href="$defaultProductImage" data-toggle="lightbox" data-type="image" data-title="$product.title (${Formatter.formatCurrency($product.basePrice)} €)" data-footer="$product.shortDescription">
+				    <a class="pull-left" href="$defaultProductImage" data-toggle="lightbox" data-type="image" data-title="$product.title (${Formatter.formatVND($product.basePrice)} K)" data-footer="$product.shortDescription">
 						<img class="media-object" src="$defaultProductThumbnail" alt="333" class="img-responsive">
 				    </a>
 				  
@@ -57,7 +56,7 @@
 									<i class="fa fa-fire" style="color:red"></i>
 								#end 							
 								
-								${Formatter.formatCurrency($product.basePrice)} €</h4>
+								${Formatter.formatCurrency($product.basePrice)} K</h4>
 	                        <span class="media-heading"><a href="/product/$product.name">${product.name}. ${product.title}</a></span>
 	                        <p>${product.shortDescription}</p>
 				    </div>
@@ -65,6 +64,10 @@
 				</ul>
             	#end
             </div>
+			
+			<div class="col-md-2">
+				
+			</div>
         </div>
     </div>
     <!-- /.container -->

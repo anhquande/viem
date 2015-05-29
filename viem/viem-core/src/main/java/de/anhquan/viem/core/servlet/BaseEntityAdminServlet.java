@@ -157,8 +157,12 @@ public abstract class BaseEntityAdminServlet<Entity extends NameBasedEntity> ext
 		
 		String name = request.getParameter("name");
 		log.info("Validate update: "+name+ " - compare to entity name = "+entity.getName());
-		if (name == null)
+		if (name == null){
+			log.warning("Trying to update the NULL entity name");
 			return ApplicationError.OK;
+			
+		}
+		
 		if (name.compareTo(entity.getName()) == 0)
 			return ApplicationError.OK;
 		

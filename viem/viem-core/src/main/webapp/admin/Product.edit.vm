@@ -22,25 +22,7 @@
 				  </div>
 				</div>
 
-				
-				<div class="form-group">
-				   <label class="col-md-4 control-label" for="vegetarian">Vegetarian</label>  
-				  <div class="col-md-1">
-				  	<input change-listener id="vegetarian" name="vegetarian" type="checkbox" placeholder="placeholder" class="form-control input-md" #if ($entity.isVegetarian()) checked #end">
-				  </div>
-				
-				  <label class="col-md-1 control-label" for="defaultSpicyLevel"></label>  
-				  <div class="col-md-2">
-				  <select class="form-control" id="defaultSpicyLevel" name="defaultSpicyLevel" change-listener>
-				  		<option #if ($entity.getDefaultSpicyLevel()==0) selected  #end value="0" >Nicht scharf</option>
-						<option #if ($entity.getDefaultSpicyLevel()==1) selected  #end value="1" >Leicht scharf</option>
-						<option #if ($entity.getDefaultSpicyLevel()==2) selected  #end value="2" >Scharf</option>
-						<option #if ($entity.getDefaultSpicyLevel()==3) selected  #end value="3" >Sehr scharf</option>
-						<option #if ($entity.getDefaultSpicyLevel()==4) selected  #end value="4" >Extreme scharf</option>
-					</select>
-				  </div>
-				</div>
-				
+			
 				<!-- Text input-->
 				<div class="form-group">
 				  <label class="col-md-4 control-label" for="title">Title</label>  
@@ -49,6 +31,22 @@
 				  </div>
 				</div>
 				
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="madeIn">Made In</label>  
+				  <div class="col-md-4">
+				  	<input change-listener id="madeIn" name="madeIn" type="text" placeholder="placeholder" class="form-control input-md" value="$entity.getMadeIn()">
+				  </div>
+				</div>
+				
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="madeIn">Provided By</label>  
+				  <div class="col-md-4">
+				  	<input change-listener id="providedBy" name="providedBy" type="text" placeholder="placeholder" class="form-control input-md" value="$entity.getProvidedBy()">
+				  </div>
+				</div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+
 				<!-- Text input-->
 				<div class="form-group">
 				  <label class="col-md-4 control-label" for="fullDescription">Full Description</label>  
@@ -89,6 +87,15 @@
 				  	<input change-listener id="comparePrice" name="comparePrice" type="text" placeholder="" class="form-control input-md" value="$entity.getComparePrice()">
 				  </div>
 				</div>
+				
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="textPrice">Text Price</label>  
+				  <div class="col-md-4">
+				  	<input change-listener id="textPrice" name="textPrice" type="text" placeholder="placeholder" class="form-control input-md" value="$entity.getTextPrice()">
+				  </div>
+				</div>
+				
 				
 				<!-- Text input-->
 				<div class="form-group">

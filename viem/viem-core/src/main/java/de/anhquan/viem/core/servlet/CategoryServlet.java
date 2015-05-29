@@ -32,7 +32,9 @@ public class CategoryServlet extends AbstractServlet {
 	ProductCategoryRelationDao pcRelDao;
 
 	@Inject
-	public CategoryServlet(CategoryDao productCategoryDao, ProductDao productDao, ProductCategoryRelationDao pcRelDao) {
+	public CategoryServlet(final CategoryDao productCategoryDao, 
+							final ProductDao productDao, 
+							final ProductCategoryRelationDao pcRelDao) {
 		this.categoryDao = productCategoryDao;
 		this.productDao = productDao;
 		this.pcRelDao = pcRelDao;
@@ -52,7 +54,8 @@ public class CategoryServlet extends AbstractServlet {
 		
 		List<Category> categories = categoryDao.getVisibleCategories();
 		context.put("categories", categories);
-		
+		log.info("processHTMLrequest categories count =  "+categories.size());
+
 		String path = StringUtils.trimToEmpty(request.getRequestURI());
 
 		int i = "/category/".length();

@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.google.appengine.labs.repackaged.com.google.common.primitives.Ints;
 import com.google.common.primitives.Doubles;
+import com.google.common.primitives.Ints;
 import com.google.common.primitives.Longs;
 import com.google.inject.Inject;
 
@@ -38,18 +38,14 @@ public class ConfigAdminServlet extends BaseEntityAdminServlet<ConfigEntity> {
 	@Override
 	protected void doViewList(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		super.doViewList(request, response);
 	}
 	
 	@Override
 	protected void doClearAll(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String confirm = request.getParameter("confirm");
-		if ((confirm != null)  && (confirm.compareToIgnoreCase("yes")==0)){
-			log.info("Clear all configs and reset to default values");
-			config.resetAll();
-		}		
+
+		config.resetAll();
 		renderJson(response, ApplicationError.OK);		
 	}
 	@Override

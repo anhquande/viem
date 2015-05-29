@@ -74,7 +74,8 @@ public class ProductServlet extends AbstractServlet {
 		
 		List<Category> categories = categoryDao.getVisibleCategories();
 		context.put("categories", categories);
-		
+		log.info("processHTMLrequest categories count =  "+categories.size());
+
 		String path = StringUtils.trimToEmpty(request.getRequestURI());
 
 		int i = "/product/".length();

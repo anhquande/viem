@@ -1,9 +1,24 @@
 body {
-  padding-top: 140px;
-  background: url('../images/dust.png') top center repeat;
+  padding-top: 62px;
+  background-color: #E9EAED;
   height: 100%;
 }
 
+.logo {
+background-image: url("../images/B2_0hn68m9A.png");
+background-repeat: no-repeat;
+background-size: auto auto;
+background-position: -107px -121px;
+display: block;
+height: 28px;
+margin: 5px;
+outline: medium none;
+overflow: hidden;
+text-indent: -999px;
+white-space: nowrap;
+width: 28px;
+z-index: 2;
+}
 .thumbnail img {
   width: 100%;
 }
@@ -28,8 +43,20 @@ footer {
 }
 
 .navbar-inverse {
-	background: url('../images/haunted-red.gif') top center repeat;
-	height: 140px;
+	background-color:#3A5795;
+	background-image: url('../images/navbg.png');
+	background-position:0 0;
+	background-repeat: repeat-x;
+	min-height: 42px;
+}
+.navbar-inverse .navbar-nav > li > a {
+	color: #FFF;
+}
+
+.nav > li > a {
+    position: relative;
+    display: block;
+    padding: 10px 5px;
 }
 
 #bottom{
@@ -43,9 +70,6 @@ footer {
 	color: #303030;
 	background: url('../images/footer-bg-user-uploaded.jpg') 0 0;
 	margin: 0 0;
-	
-
-
 }
 
 .rating .br-widget {
@@ -58,6 +82,23 @@ footer {
     height: 24px;
     display: block;
     float: left;
+}
+
+.list-group-item {
+  background-color:#E9EAED;
+  display:block;
+  margin-bottom:-1px;
+  padding:10px 15px;
+  position:relative;
+}
+
+a.list-group-item.active, a.list-group-item.active:hover, a.list-group-item.active:focus {
+  z-index:2;
+	background-color:#E9EAED;
+	border: 1px solid #DDDDDD;
+	color: #333;
+	font-weight:bold;
+	
 }
 
 .rating .br-widget a:hover,

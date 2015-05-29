@@ -17,9 +17,9 @@
 							
 				<!-- Text input-->
 				<div class="form-group">
-				  <label class="col-md-4 control-label" for="newname">Name</label>  
+				  <label class="col-md-4 control-label" for="names">Name</label>  
 				  <div class="col-md-2">
-				  	<input change-listener id="newname" name="newname" type="text" placeholder="placeholder" class="form-control input-md" value="$entity.getName()">
+				  	<input change-listener id="name" name="name" type="text" placeholder="placeholder" class="form-control input-md" value="$entity.getName()">
 				  </div>
 				</div>
 				

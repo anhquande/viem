@@ -69,14 +69,12 @@ public abstract class AbstractServlet extends HttpServlet {
 		}
 		
 		config = ConfigFactory.getConfig(AppConfig.class);
-		log.info("config:"+config.getTheme());
 		this.jsonResult = new JSONObject();
 		context = new VelocityContext();
 	}
 
 	public void rereadSettings(){
 		log.info("reread settings ...");
-		log.info("config:"+config.getTheme());
 		currentTheme = "/themes/"+config.getTheme();
 		context.put("theme", currentTheme);
 		context.put("footer1", config.getFooterLine1());
@@ -133,7 +131,7 @@ public abstract class AbstractServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		try {
-			log.info("doPost ...");
+			log.info("abstract.doPost ...");
 			processRequest(request, response);
 		} catch (EntityNotFoundException e) {
 			log.warning("Error when doPost. Errmsg = "+e.getMessage());
@@ -148,7 +146,7 @@ public abstract class AbstractServlet extends HttpServlet {
 	protected void processRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException, EntityNotFoundException, InvalidParameterException {
 		
-		log.info("processResquest ...");
+		log.info("abstract.processResquest ...");
 		AppUser user = (AppUser) request.getSession().getAttribute(Constants.SESSION_ADMIN_USER);
 		context.put("user", user);
 		rereadSettings();

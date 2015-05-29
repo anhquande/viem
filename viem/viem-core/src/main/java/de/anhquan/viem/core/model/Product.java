@@ -33,6 +33,8 @@ public class Product extends NameBasedEntity {
 	
 	private String fullDescription;
 	
+	private String textPrice;
+	
 	private int basePrice;
 	
 	private int comparePrice;
@@ -52,6 +54,10 @@ public class Product extends NameBasedEntity {
 	private int defaultSpicyLevel;
 	
 	private boolean vegetarian;
+	
+	private String madeIn;
+	
+	private String providedBy;
 	
 	@Load
 	private List<Ref<Option>> options;
@@ -333,6 +339,30 @@ public class Product extends NameBasedEntity {
 
 	public void setVegetarian(boolean vegetarian) {
 		this.vegetarian = vegetarian;
+	}
+
+	public String getMadeIn() {
+		return madeIn;
+	}
+
+	public void setMadeIn(String madeIn) {
+		this.madeIn = madeIn;
+	}
+
+	public String getProvidedBy() {
+		return providedBy;
+	}
+
+	public void setProvidedBy(String providedBy) {
+		this.providedBy = providedBy;
+	}
+
+	public String getTextPrice() {
+		return textPrice;
+	}
+
+	public void setTextPrice(String textPrice) {
+		this.textPrice = textPrice;
 	}
 
 }

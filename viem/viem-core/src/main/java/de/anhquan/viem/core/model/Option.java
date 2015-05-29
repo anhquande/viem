@@ -17,8 +17,6 @@ import com.googlecode.objectify.annotation.IgnoreSave;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Load;
 
-import de.anhquan.viem.core.util.Parser;
-
 @Entity
 @Cache
 public class Option extends BaseEntity implements Comparable<Option>, JSONAble{

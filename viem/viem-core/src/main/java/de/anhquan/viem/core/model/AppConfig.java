@@ -31,7 +31,7 @@ public interface AppConfig extends Config {
 	public int getShopStatus();
 	public void setShopStatus(int status);
 	
-	@ConfigParam(DefaultString="thaiexpress", Title = "Theme", Description = "The current front-end theme")
+	@ConfigParam(DefaultString="default", Title = "Theme", Description = "The current front-end theme")
 	public String getTheme();
 	public void setTheme(String themeName);
 		

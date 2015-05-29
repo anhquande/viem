@@ -3,33 +3,31 @@
 
 <head>
     #parse("$theme/pages/common-header.vm")
-    
 </head>
-
 <body>
 	#parse("$theme/pages/header.vm")
 	
-	<div class="container">
+    <div class="container">
         <div class="row">
 			<!-- Sidebar -->
             <div class="col-md-2">
 				#parse ("$theme/pages/categories.nav.vm")
             </div>
+			
 			<!-- Main Container -->
             <div class="col-md-6">
-				$page.content
+				 $page.content
 			</div>
 			
-			<div class="col-md-2">
-				
+			<!-- Main Container -->
+            <div class="col-md-2">
 			</div>
-		</div>
+        </div>
     </div>
     <!-- /.container -->
 
    #parse("$theme/pages/footer.vm")
-  
-
+   
 </body>
 
 </html>

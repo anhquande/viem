@@ -3,8 +3,7 @@ package de.anhquan.viem.core;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
-import com.google.appengine.labs.repackaged.com.google.common.primitives.Ints;
-import com.google.common.base.CharMatcher;
+import com.google.common.primitives.Ints;
 
 public class DemoTest {
 

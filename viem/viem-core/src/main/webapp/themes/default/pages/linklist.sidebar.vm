@@ -1,4 +1,5 @@
 <div class="list-group">
+<strong>FAVORITES</strong>
      #foreach($item in $sidebarLinkList)
         	<a href="$item.url" class="list-group-item #if ($velocityCount==1)  list-group-item-success #end ">$item.title</a>        	
     #end
